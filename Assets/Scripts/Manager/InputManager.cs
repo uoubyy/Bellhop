@@ -68,7 +68,7 @@ public class InputManager : MonoBehaviour
             keyUp = Input.GetKeyUp(keyBinding.key1);
 #else
             keyDown = Input.GetKeyDown(keyBinding.key2);
-            keyUp = Input.GetKeyUp(keyBinding.key1);
+            keyUp = Input.GetKeyUp(keyBinding.key2);
 #endif
 
             if(keyDown)
