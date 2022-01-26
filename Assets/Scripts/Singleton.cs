@@ -42,4 +42,6 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {
         _quitting = true;
     }
+
+    public static bool InstanceExists { get { return !_quitting && _instance != null; } }
 }
