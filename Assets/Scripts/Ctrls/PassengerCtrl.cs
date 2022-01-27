@@ -7,7 +7,8 @@ public enum EmotionState
     ES_NEUTRAL,
     ES_TENSION,
     ES_ANGER,
-    ES_SAD
+    ES_SAD,
+    ES_MAX // never use, just as end indicator
 }
 
 [System.Serializable]
@@ -69,7 +70,10 @@ public class PassengerCtrl : MonoBehaviour
         if (m_currentTime < curEmotionConfig.duration)
             return;
 
-        // int nextE = 
+        m_currentTime = 0.0f;
+        int state = (int)m_emotionState + 1;
+        state = Mathf.Min(state, (int)EmotionState.ES_MAX - 1);
+        m_emotionState = (EmotionState)state;
     }
 
     public float GetReward()

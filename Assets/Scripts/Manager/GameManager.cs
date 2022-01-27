@@ -35,7 +35,7 @@ public class GameManager : Singleton<GameManager>
 
     public void OnGameOver()
     {
-        m_eventManager.InvokeEvent(Consts.EVENT_GAME_OVER, null);
+        // m_eventManager.InvokeEvent(Consts.EVENT_GAME_OVER, null);
     }
 
     // Update is called once per frame
@@ -68,5 +68,10 @@ public class GameManager : Singleton<GameManager>
     {
         yield return new WaitForSeconds(3.0f);
         m_InputManager.EnableInput(true);
+    }
+
+    private void OnPassengerDelivered(Dictionary<string, object> message)
+    {
+
     }
 }
