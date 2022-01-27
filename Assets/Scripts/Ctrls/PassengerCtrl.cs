@@ -42,6 +42,7 @@ public class PassengerCtrl : MonoBehaviour
         m_bestDeliverTime = 0.0f;
         m_currentTime = 0.0f;
         m_targetLevel = 0;
+        m_delivered = false;
     }
 
     void Start()
@@ -86,7 +87,8 @@ public class PassengerCtrl : MonoBehaviour
 
     void OnElevatorStop(Dictionary<string, object> message)
     {
-        int level = (int)message["level"];
+        float data = (float)message["level"];
+        int level = (int)data;
 
         if(level == m_targetLevel)
         {

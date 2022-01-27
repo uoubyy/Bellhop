@@ -1,15 +1,15 @@
 fileFormatVersion: 2
-guid: 6c36ff356969184489eb1bda657c3fe5
+guid: c50302ee0664d4c4f92df768ef6c9631
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
-  fontSize: 16
+  fontSize: 40
   forceTextureCase: -2
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Digital Counter 7
+  - Decorated035 BT
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 2

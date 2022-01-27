@@ -36,6 +36,13 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
             Destroy(gameObject);
             throw new System.Exception(string.Format("Instance of {0} already exists, removing {0}.", GetType().FullName, ToString()));
         }
+
+        OnAwake();
+    }
+
+    protected virtual void OnAwake()
+    {
+
     }
 
     protected virtual void OnApplicationQuit()

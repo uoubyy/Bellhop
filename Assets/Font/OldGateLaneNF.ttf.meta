@@ -1,15 +1,15 @@
 fileFormatVersion: 2
-guid: 6c36ff356969184489eb1bda657c3fe5
+guid: e929a78a38afbbc47aeb4b3efdffa452
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
-  fontSize: 16
+  fontSize: 40
   forceTextureCase: -2
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Digital Counter 7
+  - Old Gate Lane NF
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 2

@@ -28,6 +28,8 @@ public class ElevatorCtrl : MonoBehaviour
 
     public float m_gravity = 9.8f;
 
+    public float m_levelHeight = 1.0f;
+
     private float m_mass = 10.0f;
     private float m_speed = 0.0f;
     private float m_height = 0.0f;
@@ -86,12 +88,12 @@ public class ElevatorCtrl : MonoBehaviour
 
         m_height = Mathf.Clamp(m_height, 0.0f, MaxHeight);
         m_heightIndictor.text = string.Format("Height {0,7:f3}", m_height);
-        m_levelIndictor.text = string.Format("Level {0,7:f3}", (int)(m_height / 3.0));
+        m_levelIndictor.text = string.Format("Level {0,7:f3}", (int)(m_height / m_levelHeight));
 
         // elevator stopped
         if(m_prevState != ElevateState.ES_Idle && m_elevatorState == ElevateState.ES_Idle)
         {
-            int level = (int)(m_height / 3.0f);
+            float level = (int)(m_height / m_levelHeight);
             GameManager.Instance.GetEventManager().InvokeEvent(Consts.EVENT_ELEVATOR_STOP, new Dictionary<string, object> { { "height", m_height}, { "level", level} });
         }
 

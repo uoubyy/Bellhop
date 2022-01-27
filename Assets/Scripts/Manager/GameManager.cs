@@ -12,8 +12,9 @@ public class GameManager : Singleton<GameManager>
 
     private ConfigManager m_configManager;
 
-    void Awake()
+    protected override void OnAwake()
     {
+        base.OnAwake();
         m_InputManager = GetComponent<InputManager>();
         m_eventManager = GetComponent<EventManager>();
         m_passengersManager = GetComponent<PassengersManager>();

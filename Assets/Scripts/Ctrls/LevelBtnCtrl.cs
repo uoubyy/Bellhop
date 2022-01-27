@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class LevelBtnCtrl : MonoBehaviour
 {
-    public int m_levelID;
+    public int m_levelID; // start from 0
 
     private Text m_levelLable;
     private Image m_btnBG;
@@ -27,8 +27,8 @@ public class LevelBtnCtrl : MonoBehaviour
         GameManager.Instance.GetEventManager().StartListening("Level" + m_levelID.ToString(), OnPressed);
         GameManager.Instance.GetEventManager().StartListening(Consts.EVENT_ELEVATOR_STOP, OnElevatorStop);
 
-        m_minHeight = m_levelID * 3.0f; // TODO config
-        m_maxHeight = m_minHeight + 3.0f;
+        m_minHeight = m_levelID - 0.1f; // TODO config
+        m_maxHeight = m_levelID + 0.6f;
     }
 
     // Update is called once per frame
@@ -48,9 +48,10 @@ public class LevelBtnCtrl : MonoBehaviour
 
     void OnElevatorStop(Dictionary<string, object> message)
     {
-        float elevatorHeight = (float)message["height"];
+        float elevatorLevel = (float)message["level"];
+
         Debug.Log(string.Format("{0} => {1}", m_minHeight, m_maxHeight));
-        if(elevatorHeight >= m_minHeight && elevatorHeight <= m_maxHeight && m_levelPressed)
+        if(elevatorLevel >= m_minHeight && elevatorLevel <= m_maxHeight && m_levelPressed)
         {
             m_levelPressed = false;
             m_btnBG.color = Color.green;
