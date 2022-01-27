@@ -1,0 +1,32 @@
+[
+    {
+        "emotionId": 0,
+        "duration": 8.0,
+        "rewardId" : 1,
+        "rewardNum" : 40
+    },
+    {
+        "emotionId": 1,
+        "duration": 6.0,
+        "rewardId" : 1,
+        "rewardNum" : 30
+    },
+    {
+        "emotionId": 2,
+        "duration": 4.0,
+        "rewardId" : 1,
+        "rewardNum" : 20
+    },
+    {
+        "emotionId": 3,
+        "duration": 4.0,
+        "rewardId" : 1,
+        "rewardNum" : -10
+    },
+    {
+        "emotionId": 4,
+        "duration": 2.0,
+        "rewardId" : 1,
+        "rewardNum" : -20
+    }
+]

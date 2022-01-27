@@ -40,14 +40,25 @@ public class ElevatorCtrl : MonoBehaviour
 
     private ElevateState m_elevatorState = ElevateState.ES_Idle;
 
-
-
     // Start is called before the first frame update
     void Start()
     {
         GameManager.Instance.GetEventManager().StartListening(Consts.EVENT_ELEVATOR_UP, OnUpBtnStateChange);
         GameManager.Instance.GetEventManager().StartListening(Consts.EVENT_ELEVATOR_DOWN, OnDownBtnStateChange);
 
+        GameManager.Instance.GetEventManager().StartListening(Consts.EVENT_GAME_START, OnGameStart);
+        GameManager.Instance.GetEventManager().StartListening(Consts.EVENT_GAME_OVER, OnGameOver);
+
+        Reset();
+    }
+
+    public void OnGameStart(Dictionary<string, object> message)
+    {
+
+    }
+
+    public void OnGameOver(Dictionary<string, object> message)
+    {
         Reset();
     }
 

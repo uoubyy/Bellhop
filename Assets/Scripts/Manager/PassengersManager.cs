@@ -38,7 +38,7 @@ public class PassengersManager : MonoBehaviour
             deliveredAmount = 0;
             CurDifficulty = Mathf.Max(CurDifficulty, 2);// test code
         }    
-        DifficultyInfo difficultyInfo = GameManager.Instance.GetConfigManager().GetDifficultyConfig(CurDifficulty);
+        DifficultyInfo difficultyInfo = ConfigManager.Instance.GetDifficultyConfig(CurDifficulty);
 
         int amount = difficultyInfo.maxPassenger;
         while (amount > 0)
@@ -54,7 +54,7 @@ public class PassengersManager : MonoBehaviour
 
             float bestDeliverTime = Random.Range(difficultyInfo.bestDeliverTime.x, difficultyInfo.bestDeliverTime.y);
             int targetLevel = Random.Range(1, 11);
-            passenger.Init(bestDeliverTime, targetLevel);
+            passenger.Init(bestDeliverTime, targetLevel, EmotionState.ES_HAPPY);
             amount--;
         }
     }

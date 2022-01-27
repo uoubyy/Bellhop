@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public enum EmotionState
 {
-    ES_HAPPY,
+    ES_HAPPY = 0,
     ES_NEUTRAL,
     ES_TENSION,
     ES_ANGER,
@@ -30,11 +30,15 @@ public class PassengerCtrl : MonoBehaviour
     public float m_mass;
     public bool m_delivered = false;
 
-    public void Init(float bestDeliverTime, int targetLevel)
+    private EmotionInfo curEmotionConfig;
+
+    public void Init(float bestDeliverTime, int targetLevel, EmotionState initialState)
     {
         m_bestDeliverTime = bestDeliverTime;
         m_currentTime = 0.0f;
         m_targetLevel = targetLevel;
+        m_emotionState = initialState;
+        curEmotionConfig = ConfigManager.Instance.GetEmoitionConfig(initialState);
     }
 
     public void Reset()
@@ -62,31 +66,22 @@ public class PassengerCtrl : MonoBehaviour
 
     protected void UpdateEmotionState()
     {
+        if (m_currentTime < curEmotionConfig.duration)
+            return;
 
+        // int nextE = 
     }
 
     public float GetReward()
     {
-        switch(m_emotionState)
-        {
-            case EmotionState.ES_HAPPY:
-
-                break;
-            case EmotionState.ES_NEUTRAL:
-                break;
-            case EmotionState.ES_TENSION:
-                break;
-            case EmotionState.ES_ANGER:
-                break;
-            case EmotionState.ES_SAD:
-                break;
-        }
-
-        return 0.0f;
+        return ConfigManager.Instance.GetEmoitionConfig(m_emotionState).rewardNum;
     }
 
     void OnElevatorStop(Dictionary<string, object> message)
     {
+        if (!gameObject.activeSelf)
+            return;
+
         float data = (float)message["level"];
         int level = (int)data;
 
@@ -94,7 +89,8 @@ public class PassengerCtrl : MonoBehaviour
         {
             m_delivered = true;
 
-            GameManager.Instance.GetEventManager().InvokeEvent(Consts.EVENT_PASSENGER_DELVERED, new Dictionary<string, object> { { "level", level } });
+            float reward = GetReward();
+            GameManager.Instance.GetEventManager().InvokeEvent(Consts.EVENT_PASSENGER_DELVERED, new Dictionary<string, object> { { "level", level }, { "reward", reward } });
 
             // StartCoroutine(AfterDeliver());
             Reset();
