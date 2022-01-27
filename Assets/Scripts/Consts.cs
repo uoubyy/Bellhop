@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Consts : MonoBehaviour
+public class Event
 {
     public const string EVENT_GAME_START = "event_game_start";
     public const string EVENT_GAME_OVER = "event_game_over";

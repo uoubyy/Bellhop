@@ -19,6 +19,12 @@ public class EmotionsInfoList
     public EmotionInfo[] EmotionList;
 }
 
+[System.Serializable]
+public class DifficultyInfoList
+{
+    public DifficultyInfo[] DifficultyList;
+}
+
 public class ConfigManager : Singleton<ConfigManager>
 {
 #if UNITY_EDITOR || DEBUG
@@ -58,6 +64,9 @@ public class ConfigManager : Singleton<ConfigManager>
             emotionsConfig.Add(info.emotionId, info);
         }
 
+
+
+#if UNITY_EDITOR || DEBUG
         // TODO read config file
 
         DifficultyInfo level1 = new DifficultyInfo();
@@ -75,5 +84,13 @@ public class ConfigManager : Singleton<ConfigManager>
         difficultiesConfig.Add(1, level1);
         difficultiesConfig.Add(2, level2);
         difficultiesConfig.Add(3, level3);
+#else
+
+        DifficultyInfoList difficultyList = JsonUtility.FromJson<DifficultyInfoList>("{\"DifficultyList\":" + difficultyConfigAsset.text + "}");
+        foreach (var info in difficultyList.DifficultyList)
+        {
+            difficultiesConfig.Add(info.levelID, info);
+        }
+#endif
     }
 }

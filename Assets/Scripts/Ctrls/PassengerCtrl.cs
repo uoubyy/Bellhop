@@ -52,7 +52,7 @@ public class PassengerCtrl : MonoBehaviour
 
     void Start()
     {
-        GameManager.Instance.GetEventManager().StartListening(Consts.EVENT_ELEVATOR_STOP, OnElevatorStop);
+        GameManager.Instance.GetEventManager().StartListening(Event.EVENT_ELEVATOR_STOP, OnElevatorStop);
     }
 
     void Update()
@@ -94,7 +94,7 @@ public class PassengerCtrl : MonoBehaviour
             m_delivered = true;
 
             float reward = GetReward();
-            GameManager.Instance.GetEventManager().InvokeEvent(Consts.EVENT_PASSENGER_DELVERED, new Dictionary<string, object> { { "level", level }, { "reward", reward } });
+            GameManager.Instance.GetEventManager().InvokeEvent(Event.EVENT_PASSENGER_DELVERED, new Dictionary<string, object> { { "level", level }, { "reward", reward } });
 
             // StartCoroutine(AfterDeliver());
             Reset();

@@ -1,0 +1,14 @@
+[
+    {
+        "levelID": 1,
+        "maxPassenger": 2
+    },
+    {
+        "levelID": 2,
+        "maxPassenger": 3
+    },
+    {
+        "levelID": 3,
+        "maxPassenger": 4
+    }
+]

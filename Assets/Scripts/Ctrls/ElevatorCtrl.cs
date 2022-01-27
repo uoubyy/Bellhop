@@ -43,11 +43,11 @@ public class ElevatorCtrl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameManager.Instance.GetEventManager().StartListening(Consts.EVENT_ELEVATOR_UP, OnUpBtnStateChange);
-        GameManager.Instance.GetEventManager().StartListening(Consts.EVENT_ELEVATOR_DOWN, OnDownBtnStateChange);
+        GameManager.Instance.GetEventManager().StartListening(Event.EVENT_ELEVATOR_UP, OnUpBtnStateChange);
+        GameManager.Instance.GetEventManager().StartListening(Event.EVENT_ELEVATOR_DOWN, OnDownBtnStateChange);
 
-        GameManager.Instance.GetEventManager().StartListening(Consts.EVENT_GAME_START, OnGameStart);
-        GameManager.Instance.GetEventManager().StartListening(Consts.EVENT_GAME_OVER, OnGameOver);
+        GameManager.Instance.GetEventManager().StartListening(Event.EVENT_GAME_START, OnGameStart);
+        GameManager.Instance.GetEventManager().StartListening(Event.EVENT_GAME_OVER, OnGameOver);
 
         Reset();
     }
@@ -105,7 +105,7 @@ public class ElevatorCtrl : MonoBehaviour
         if(m_prevState != ElevateState.ES_Idle && m_elevatorState == ElevateState.ES_Idle)
         {
             float level = (int)(m_height / m_levelHeight);
-            GameManager.Instance.GetEventManager().InvokeEvent(Consts.EVENT_ELEVATOR_STOP, new Dictionary<string, object> { { "height", m_height}, { "level", level} });
+            GameManager.Instance.GetEventManager().InvokeEvent(Event.EVENT_ELEVATOR_STOP, new Dictionary<string, object> { { "height", m_height}, { "level", level} });
         }
 
         if (m_elevatorState != ElevateState.ES_Idle)

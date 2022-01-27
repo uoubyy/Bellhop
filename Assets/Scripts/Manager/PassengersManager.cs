@@ -17,7 +17,7 @@ public class PassengersManager : MonoBehaviour
     {
         CurDifficulty = difficulty;
         
-        GameManager.Instance.GetEventManager().StartListening(Consts.EVENT_PASSENGER_DELVERED, OnPassengerDeliver);
+        GameManager.Instance.GetEventManager().StartListening(Event.EVENT_PASSENGER_DELVERED, OnPassengerDeliver);
 
         Assert.IsNotNull(passengerPrefab);
 

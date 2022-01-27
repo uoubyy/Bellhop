@@ -24,18 +24,19 @@ public class GameManager : Singleton<GameManager>
 
     void Start()
     {
+        m_eventManager.StartListening(Event.EVENT_PASSENGER_DELVERED, OnPassengerDelivered);
         OnGameStart();
     }
 
     public void OnGameStart()
     {
         m_passengersManager.OnGameStart(1);
-        m_eventManager.InvokeEvent(Consts.EVENT_GAME_START, null);
+        m_eventManager.InvokeEvent(Event.EVENT_GAME_START, null);
     }
 
     public void OnGameOver()
     {
-        // m_eventManager.InvokeEvent(Consts.EVENT_GAME_OVER, null);
+        // m_eventManager.InvokeEvent(Event.EVENT_GAME_OVER, null);
     }
 
     // Update is called once per frame
@@ -72,6 +73,7 @@ public class GameManager : Singleton<GameManager>
 
     private void OnPassengerDelivered(Dictionary<string, object> message)
     {
-
+        float reward = (float)message["reward"];
+        m_timeCountDown += reward;
     }
 }
