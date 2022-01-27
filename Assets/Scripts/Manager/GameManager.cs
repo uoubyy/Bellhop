@@ -35,7 +35,7 @@ public class GameManager : Singleton<GameManager>
 
     public void OnGameOver()
     {
-        m_eventManager.InvokeEvent(Consts.EVENT_GAME_OVER, null);
+        //m_eventManager.InvokeEvent(Consts.EVENT_GAME_OVER, null);
     }
 
     // Update is called once per frame

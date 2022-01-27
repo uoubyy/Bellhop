@@ -40,6 +40,8 @@ public class ElevatorCtrl : MonoBehaviour
 
     private ElevateState m_elevatorState = ElevateState.ES_Idle;
 
+    private Rigidbody rb;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,6 +50,8 @@ public class ElevatorCtrl : MonoBehaviour
 
         GameManager.Instance.GetEventManager().StartListening(Consts.EVENT_GAME_START, OnGameStart);
         GameManager.Instance.GetEventManager().StartListening(Consts.EVENT_GAME_OVER, OnGameOver);
+
+        rb = GetComponent<Rigidbody>();
 
         Reset();
     }
@@ -70,6 +74,8 @@ public class ElevatorCtrl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+         m_speedIndictor.text = string.Format("Speed {0,7:f3}", rb.velocity.y);
+        return;
 #if UNITY_EDITOR || DEBUG
         if (Input.GetJoystickNames().Length > 0)
 #endif
@@ -114,10 +120,36 @@ public class ElevatorCtrl : MonoBehaviour
         m_timeIndictor.text = string.Format("Time {0,7:f3}", m_runningTime);
     }
 
+    void FixedUpdate()
+    {
+        // rb.AddForce( new Vector3(0, 100, 0), ForceMode.Impulse);
+        //   if (rb.velocity.magnitude > MaxSpeed) {
+        //     rb.velocity = rb.velocity.normalized * MaxSpeed;
+        // }
+        // return;
+#if UNITY_EDITOR || DEBUG
+        if (Input.GetJoystickNames().Length > 0)
+#endif
+        {
+            m_pullingForce = Input.GetAxis("Vertical") * 100;
+
+        }
+
+        Vector3 moveForce = new Vector3(0, m_pullingForce, 0);
+        rb.AddForce(moveForce, ForceMode.Impulse);
+        UpdateSpeedRange();
+
+        Debug.Log(string.Format("for {0}", m_pullingForce));
+
+        if (rb.velocity.magnitude > MaxSpeed) {
+            rb.velocity = rb.velocity.normalized * MaxSpeed;
+        }
+    }
+
     private void OnUpBtnStateChange(Dictionary<string, object> message)
     {
         if ((bool)message["pressed"])
-            m_pullingForce = MaxForce;
+            m_pullingForce = 100;
         else if ((bool)message["released"])
             m_pullingForce = 0.0f;
 
