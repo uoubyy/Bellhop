@@ -46,7 +46,7 @@ public class EventManager : MonoBehaviour
         if(eventDictory.TryGetValue(eventName, out thisEvent))
         {
             thisEvent.Invoke(message);
-            Debug.Log(string.Format("Invoke event {0}, message {1}", eventName, message.ToString()));
+            Debug.Log(string.Format("Invoke event {0}, message {1}", eventName, message != null ? message.ToString() : ""));
         }    
     }
 

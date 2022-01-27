@@ -13,7 +13,13 @@ public class DifficultyInfo
     // TODO
 }
 
-public class ConfigManager : MonoBehaviour
+[System.Serializable]
+public class EmotionsInfoList
+{
+    public EmotionInfo[] EmotionList;
+}
+
+public class ConfigManager : Singleton<ConfigManager>
 {
 #if UNITY_EDITOR || DEBUG
     public List<DifficultyInfo> debugDifficultyConfig;
@@ -32,9 +38,11 @@ public class ConfigManager : MonoBehaviour
 #endif
     }
 
-    // Start is called before the first frame update
-    public void Init()
+
+    protected override void OnAwake()
     {
+        base.OnAwake();
+
         TextAsset emotionConfigAsset = Resources.Load("Config/EmotionConfig") as TextAsset;
         TextAsset difficultyConfigAsset = Resources.Load("Config/DifficultyConfig") as TextAsset;
 
@@ -43,6 +51,12 @@ public class ConfigManager : MonoBehaviour
 
         Assert.IsNotNull(emotionConfigAsset);
         Assert.IsNotNull(difficultyConfigAsset);
+
+        EmotionsInfoList emotionsList = JsonUtility.FromJson<EmotionsInfoList>("{\"EmotionList\":" + emotionConfigAsset.text + "}");
+        foreach(var info in emotionsList.EmotionList)
+        {
+            emotionsConfig.Add(info.emotionId, info);
+        }
 
         // TODO read config file
 
