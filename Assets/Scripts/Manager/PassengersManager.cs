@@ -9,6 +9,8 @@ public class PassengersManager : MonoBehaviour
 
     public GameObject passengerPrefab;
 
+    private int deliveredAmount = 0;
+
     public void OnGameStart(int difficulty)
     {
         CurDifficulty = difficulty;
@@ -22,11 +24,18 @@ public class PassengersManager : MonoBehaviour
 
     void OnPassengerDeliver(Dictionary<string, object> message)
     {
+        deliveredAmount++;
         SpawnPassengers();
     }
 
     private void SpawnPassengers()
     {
+        if(deliveredAmount >= 15)
+        {
+            CurDifficulty++;
+            deliveredAmount = 0;
+            CurDifficulty = Mathf.Max(CurDifficulty, 3);// test code
+        }    
         DifficultyInfo difficultyInfo = GameManager.Instance.GetConfigManager().GetDifficultyConfig(CurDifficulty);
 
         int amount = difficultyInfo.maxPassenger;
