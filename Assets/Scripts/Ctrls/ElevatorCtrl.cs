@@ -24,7 +24,7 @@ public class ElevatorCtrl : MonoBehaviour
     private float m_maxSpeed = 0.0f;
 
     public float MaxHeight = 200.0f;
-    public float MaxForce = 5.0f;
+    public float MaxForce = 100.0f;
 
     public float m_gravity = 9.8f;
 
@@ -40,7 +40,9 @@ public class ElevatorCtrl : MonoBehaviour
 
     private ElevateState m_elevatorState = ElevateState.ES_Idle;
 
-    private Rigidbody rb;
+    private Rigidbody m_rigidBody;
+
+    private float m_initialHeight;
 
     // Start is called before the first frame update
     void Start()
@@ -51,14 +53,14 @@ public class ElevatorCtrl : MonoBehaviour
         GameManager.Instance.GetEventManager().StartListening(Event.EVENT_GAME_START, OnGameStart);
         GameManager.Instance.GetEventManager().StartListening(Event.EVENT_GAME_OVER, OnGameOver);
 
-        rb = GetComponent<Rigidbody>();
+        m_rigidBody = GetComponent<Rigidbody>();
 
         Reset();
     }
 
     public void OnGameStart(Dictionary<string, object> message)
     {
-
+        m_initialHeight = transform.position.y;
     }
 
     public void OnGameOver(Dictionary<string, object> message)
@@ -74,8 +76,35 @@ public class ElevatorCtrl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-         m_speedIndictor.text = string.Format("Speed {0,7:f3}", rb.velocity.y);
+        m_speedIndictor.text = string.Format("Speed {0,7:f3}", m_speed);
+        m_heightIndictor.text = string.Format("Height {0,7:f3}", m_height);
+
+        ElevateState m_prevState = m_elevatorState;
+
+        if (m_speed <= -0.05f)
+            m_elevatorState = ElevateState.ES_Down;
+        else if (m_speed >= 0.05)
+            m_elevatorState = ElevateState.ES_Up;
+        else
+            m_elevatorState = ElevateState.ES_Idle;
+
+        // elevator stopped
+        if (m_prevState != ElevateState.ES_Idle && m_elevatorState == ElevateState.ES_Idle)
+        {
+            float level = (int)(m_height / m_levelHeight);
+            GameManager.Instance.GetEventManager().InvokeEvent(Event.EVENT_ELEVATOR_STOP, new Dictionary<string, object> { { "height", m_height }, { "level", level } });
+        }
+
+        if (m_elevatorState != ElevateState.ES_Idle)
+            m_runningTime += Time.deltaTime;
+
+        if (m_elevatorState != ElevateState.ES_Idle)
+            m_runningTime += Time.deltaTime;
+
+        m_timeIndictor.text = string.Format("Time {0,7:f3}", m_runningTime);
+
         return;
+        /*
 #if UNITY_EDITOR || DEBUG
         if (Input.GetJoystickNames().Length > 0)
 #endif
@@ -118,38 +147,35 @@ public class ElevatorCtrl : MonoBehaviour
             m_runningTime += Time.deltaTime;
 
         m_timeIndictor.text = string.Format("Time {0,7:f3}", m_runningTime);
+        */
     }
 
     void FixedUpdate()
     {
-        // rb.AddForce( new Vector3(0, 100, 0), ForceMode.Impulse);
-        //   if (rb.velocity.magnitude > MaxSpeed) {
-        //     rb.velocity = rb.velocity.normalized * MaxSpeed;
-        // }
-        // return;
+        m_speed = m_rigidBody.velocity.y;
+        m_height = transform.position.y - m_initialHeight;
 #if UNITY_EDITOR || DEBUG
         if (Input.GetJoystickNames().Length > 0)
 #endif
         {
-            m_pullingForce = Input.GetAxis("Vertical") * 100;
-
+            m_pullingForce = Input.GetAxis("Vertical") * MaxForce;
         }
 
         Vector3 moveForce = new Vector3(0, m_pullingForce, 0);
-        rb.AddForce(moveForce, ForceMode.Impulse);
+        m_rigidBody.AddForce(moveForce, ForceMode.Impulse);
         UpdateSpeedRange();
 
-        Debug.Log(string.Format("for {0}", m_pullingForce));
+        Debug.Log(string.Format("Pulling Force {0}", m_pullingForce));
 
-        if (rb.velocity.magnitude > MaxSpeed) {
-            rb.velocity = rb.velocity.normalized * MaxSpeed;
+        if (m_rigidBody.velocity.magnitude > MaxSpeed) {
+            m_rigidBody.velocity = m_rigidBody.velocity.normalized * MaxSpeed;
         }
     }
 
     private void OnUpBtnStateChange(Dictionary<string, object> message)
     {
         if ((bool)message["pressed"])
-            m_pullingForce = 100;
+            m_pullingForce = MaxForce;
         else if ((bool)message["released"])
             m_pullingForce = 0.0f;
 
