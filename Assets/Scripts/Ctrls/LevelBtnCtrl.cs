@@ -27,7 +27,7 @@ public class LevelBtnCtrl : MonoBehaviour
         GameManager.Instance.GetEventManager().StartListening("Level" + m_levelID.ToString(), OnPressed);
         GameManager.Instance.GetEventManager().StartListening(Consts.EVENT_ELEVATOR_STOP, OnElevatorStop);
 
-        m_minHeight = m_levelID * 3.0f;
+        m_minHeight = m_levelID * 3.0f; // TODO config
         m_maxHeight = m_minHeight + 3.0f;
     }
 

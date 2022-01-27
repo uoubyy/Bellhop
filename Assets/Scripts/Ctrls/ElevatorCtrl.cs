@@ -91,7 +91,8 @@ public class ElevatorCtrl : MonoBehaviour
         // elevator stopped
         if(m_prevState != ElevateState.ES_Idle && m_elevatorState == ElevateState.ES_Idle)
         {
-            GameManager.Instance.GetEventManager().InvokeEvent(Consts.EVENT_ELEVATOR_STOP, new Dictionary<string, object> { { "height", m_height} });
+            int level = (int)(m_height / 3.0f);
+            GameManager.Instance.GetEventManager().InvokeEvent(Consts.EVENT_ELEVATOR_STOP, new Dictionary<string, object> { { "height", m_height}, { "level", level} });
         }
 
         if (m_elevatorState != ElevateState.ES_Idle)

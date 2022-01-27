@@ -8,18 +8,24 @@ public class GameManager : Singleton<GameManager>
 
     private EventManager m_eventManager;
 
-    // Start is called before the first frame update
+    private PassengersManager m_passengersManager;
+
+    private ConfigManager m_configManager;
 
     void Awake()
     {
         m_InputManager = GetComponent<InputManager>();
         m_eventManager = GetComponent<EventManager>();
+        m_passengersManager = GetComponent<PassengersManager>();
+        m_configManager = GetComponent<ConfigManager>();
+
         m_eventManager.Init();
+        m_configManager.Init();
     }
 
     void Start()
     {
-
+        m_passengersManager.OnGameStart(1);
     }
 
     // Update is called once per frame
@@ -36,6 +42,11 @@ public class GameManager : Singleton<GameManager>
     public EventManager GetEventManager()
     {
         return m_eventManager;
+    }
+
+    public ConfigManager GetConfigManager()
+    {
+        return m_configManager;
     }
 
     public void OnLevelArrived(int levelID)

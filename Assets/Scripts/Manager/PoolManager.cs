@@ -20,6 +20,7 @@ public class PoolManager : Singleton<PoolManager>
 
         AutoComponentPrefabPool<Poolable> pool = m_pools[poolablePrefab];
         Poolable spawnedInstance = pool.Get();
+        spawnedInstance.pool = pool;
         return spawnedInstance;
     }
 
