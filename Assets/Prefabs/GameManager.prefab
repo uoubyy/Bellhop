@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1286049177866804652}
   - component: {fileID: 873115780}
   - component: {fileID: 1266917649396472286}
+  - component: {fileID: 8497004574412403328}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -101,10 +102,36 @@ MonoBehaviour:
   debugDifficultyConfig:
   - levelID: 1
     maxPassenger: 1
-    bestDeliverTime: {x: 15, y: 30}
+    minDeliverTime: 0
+    maxDeliverTime: 0
+    gametime: 0
+    passNum: 0
+    posibility: []
   - levelID: 2
     maxPassenger: 2
-    bestDeliverTime: {x: 10, y: 15}
+    minDeliverTime: 0
+    maxDeliverTime: 0
+    gametime: 0
+    passNum: 0
+    posibility: []
   - levelID: 3
     maxPassenger: 3
-    bestDeliverTime: {x: 5, y: 10}
+    minDeliverTime: 0
+    maxDeliverTime: 0
+    gametime: 0
+    passNum: 0
+    posibility: []
+--- !u!114 &8497004574412403328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1286049177866804648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f013324f62501df4097a3a336e6c21e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  floorPrefab: {fileID: 698971513596554476, guid: f5195daaffc027644a49fe4a212e27d7, type: 3}
+  initialCapacity: 10

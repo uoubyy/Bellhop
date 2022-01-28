@@ -26,7 +26,8 @@ public class ElevatorCtrl : MonoBehaviour
     public float m_gravity = 9.8f;
     public float m_firctionFactor = 0.2f;
 
-    public float m_levelHeight = 1.0f;
+    private float m_floorHeight = 60.0f;
+    private float m_maxHeight;
 
     private float m_mass = 10.0f;
     private float m_speed = 0.0f;
@@ -60,6 +61,7 @@ public class ElevatorCtrl : MonoBehaviour
     public void OnGameStart(Dictionary<string, object> message)
     {
         m_runningTime = 0.0f;
+        m_maxHeight = m_floorHeight * 9;
     }
 
     public void OnGameOver(Dictionary<string, object> message)
@@ -119,10 +121,14 @@ public class ElevatorCtrl : MonoBehaviour
         {
             ChangeElevatorState(ElevateState.ES_Stoped);
         }
-        else if (m_rigidBody.velocity.y <= -0.5f && transform.position.y - m_initialHeight <= 1.0f) // faceing down
+        else if (m_rigidBody.velocity.y <= -0.5f && transform.position.y - m_initialHeight <= 1.0f) // facing down
         {
             ChangeElevatorState(ElevateState.ES_Stoped);
             transform.position = new Vector3(transform.position.x, m_initialHeight, transform.position.z);
+        }else if(m_rigidBody.velocity.y >= 0.5f && transform.position.y - m_initialHeight >= m_maxHeight - 1.0f) // facing up
+        {
+            ChangeElevatorState(ElevateState.ES_Stoped);
+            transform.position = new Vector3(transform.position.x, m_initialHeight + m_maxHeight, transform.position.z);
         }
         else if (m_rigidBody.velocity.magnitude > MaxSpeed)
         {
@@ -165,12 +171,17 @@ public class ElevatorCtrl : MonoBehaviour
 
     private void ChangeElevatorState(ElevateState newState)
     {
+        if (newState == m_elevatorState)
+            return;
+
         switch (newState)
         {
             case ElevateState.ES_Idle:
                 m_rigidBody.isKinematic = true;
                 break;
             case ElevateState.ES_Up:
+                if (transform.position.y - m_initialHeight >= m_maxHeight - 1.0f)
+                    return;
                 m_rigidBody.isKinematic = false;
                 break;
             case ElevateState.ES_Down:
@@ -180,6 +191,7 @@ public class ElevatorCtrl : MonoBehaviour
                 m_rigidBody.isKinematic = false;
                 break;
             case ElevateState.ES_Stoped:
+                GameManager.Instance.GetEventManager().InvokeEvent(Event.EVENT_ELEVATOR_STOP, new Dictionary<string, object> { { "level", m_height / m_floorHeight } });
                 m_rigidBody.isKinematic = true;
                 break;
         }

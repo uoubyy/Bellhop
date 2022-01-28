@@ -4,7 +4,7 @@
         "maxPassenger": 1,
         "minDeliverTime": 60,
         "maxDeliverTime": 90,
-        "gametime": 180,
+        "gametime": 180.0,
         "passNum": 10,
         "posibility": [
             100.0
@@ -15,7 +15,7 @@
         "maxPassenger": 2,
         "minDeliverTime": 40,
         "maxDeliverTime": 60,
-        "gametime": 120,
+        "gametime": 120.0,
         "passNum": 8,
         "posibility": [
             100.0,
@@ -27,7 +27,7 @@
         "maxPassenger": 3,
         "minDeliverTime": 30,
         "maxDeliverTime": 40,
-        "gametime": 60,
+        "gametime": 60.0,
         "passNum": 5,
         "posibility": [
             100.0,

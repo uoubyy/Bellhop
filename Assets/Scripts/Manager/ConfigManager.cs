@@ -10,7 +10,7 @@ public class DifficultyInfo
     public int maxPassenger;
     public float minDeliverTime;
     public float maxDeliverTime;
-    public int gametime;
+    public float gametime;
     public int passNum;
     public float[] posibility;
 }
