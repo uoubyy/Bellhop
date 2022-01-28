@@ -99,6 +99,10 @@ public class ElevatorCtrl : MonoBehaviour
                 else if (m_pullingForce >= 0.5f)
                     ChangeElevatorState(ElevateState.ES_Up);
             }
+            else if(m_pullingForce >= -0.5f && m_pullingForce <= 0.5f)
+            {
+                ChangeElevatorState(ElevateState.ES_Stopping);
+            }
         }
 
         if (m_elevatorState == ElevateState.ES_Idle || m_elevatorState == ElevateState.ES_Stoped)
@@ -111,11 +115,11 @@ public class ElevatorCtrl : MonoBehaviour
          Vector3 moveForce = new Vector3(0, m_pullingForce, 0) - m_firctionFactor * m_rigidBody.mass * m_gravity * m_rigidBody.velocity.normalized;
          m_rigidBody.AddForce(moveForce, ForceMode.Impulse);
 
-        if (m_elevatorState == ElevateState.ES_Stopping && m_rigidBody.velocity.magnitude <= 0.5f)
+        if (m_elevatorState == ElevateState.ES_Stopping && m_rigidBody.velocity.magnitude <= 2.0f)
         {
             ChangeElevatorState(ElevateState.ES_Stoped);
         }
-        else if (m_rigidBody.velocity.y <= -0.5f && transform.position.y - m_initialHeight <= 1.0f)
+        else if (m_rigidBody.velocity.y <= -0.5f && transform.position.y - m_initialHeight <= 1.0f) // faceing down
         {
             ChangeElevatorState(ElevateState.ES_Stoped);
             transform.position = new Vector3(transform.position.x, m_initialHeight, transform.position.z);
