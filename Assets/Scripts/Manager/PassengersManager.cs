@@ -11,12 +11,13 @@ public class PassengersManager : MonoBehaviour
 
     private int deliveredAmount = 0;
 
-    public int debug_deliver_amount = 3;
+    private DifficultyInfo curDifficultyInfo;
 
     public void OnGameStart(int difficulty)
     {
         CurDifficulty = difficulty;
-        
+        curDifficultyInfo = ConfigManager.Instance.GetDifficultyConfig(CurDifficulty);
+
         GameManager.Instance.GetEventManager().StartListening(Event.EVENT_PASSENGER_DELVERED, OnPassengerDeliver);
 
         Assert.IsNotNull(passengerPrefab);
@@ -32,30 +33,34 @@ public class PassengersManager : MonoBehaviour
 
     private void SpawnPassengers()
     {
-        if(deliveredAmount >= debug_deliver_amount)
+        if(deliveredAmount >= curDifficultyInfo.passNum)
         {
             CurDifficulty++;
             deliveredAmount = 0;
-            CurDifficulty = Mathf.Max(CurDifficulty, 2);// test code
-        }    
-        DifficultyInfo difficultyInfo = ConfigManager.Instance.GetDifficultyConfig(CurDifficulty);
+            CurDifficulty = Mathf.Max(CurDifficulty, ConfigManager.Instance.MaxDifficulty());
+            curDifficultyInfo = ConfigManager.Instance.GetDifficultyConfig(CurDifficulty);
+        }
 
-        int amount = difficultyInfo.maxPassenger;
-        while (amount > 0)
+        int amount = 0;
+        while (amount < curDifficultyInfo.maxPassenger)
         {
+            float rate = Random.Range(1.0f, 100.0f);
+            if (rate > curDifficultyInfo.posibility[amount])
+                return;
+
             var poolable = Poolable.TryGetPoolable<Poolable>(passengerPrefab);
             if (poolable == null)
                 return;
 
             Vector2 offset = Random.insideUnitCircle * 10.0f;
-            poolable.gameObject.transform.position = new Vector3(offset.x, 0.0f, offset.y);
+            poolable.gameObject.transform.position = new Vector3(offset.x, 0.0f, offset.y);// get from level pos
 
             PassengerCtrl passenger = poolable.gameObject.GetComponent<PassengerCtrl>();
 
-            float bestDeliverTime = Random.Range(difficultyInfo.bestDeliverTime.x, difficultyInfo.bestDeliverTime.y);
-            int targetLevel = Random.Range(1, 11);
+            float bestDeliverTime = Random.Range(curDifficultyInfo.minDeliverTime, curDifficultyInfo.maxDeliverTime);
+            int targetLevel = Random.Range(1, 10);
             passenger.Init(bestDeliverTime, targetLevel, EmotionState.ES_HAPPY);
-            amount--;
+            amount++;
         }
     }
 }

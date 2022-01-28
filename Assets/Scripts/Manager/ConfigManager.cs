@@ -8,9 +8,11 @@ public class DifficultyInfo
 {
     public int levelID;
     public int maxPassenger;
-
-    public Vector2 bestDeliverTime;
-    // TODO
+    public float minDeliverTime;
+    public float maxDeliverTime;
+    public int gametime;
+    public int passNum;
+    public float[] posibility;
 }
 
 [System.Serializable]
@@ -35,15 +37,11 @@ public class ConfigManager : Singleton<ConfigManager>
     public Dictionary<EmotionState, EmotionInfo> emotionsConfig;
 
     public EmotionInfo GetEmoitionConfig(EmotionState emotion) { return emotionsConfig[emotion]; }
+    
+    // difficulty start from 1
     public DifficultyInfo GetDifficultyConfig(int difficulty) {
-
-#if UNITY_EDITOR || DEBUG
-        return debugDifficultyConfig[difficulty - 1];
-#else
         return difficultiesConfig[difficulty];
-#endif
     }
-
 
     protected override void OnAwake()
     {
@@ -64,33 +62,12 @@ public class ConfigManager : Singleton<ConfigManager>
             emotionsConfig.Add(info.emotionId, info);
         }
 
-
-
-#if UNITY_EDITOR || DEBUG
-        // TODO read config file
-
-        DifficultyInfo level1 = new DifficultyInfo();
-        level1.levelID = 1;
-        level1.maxPassenger = 2;
-
-        DifficultyInfo level2 = new DifficultyInfo();
-        level2.levelID = 2;
-        level2.maxPassenger = 3;
-
-        DifficultyInfo level3 = new DifficultyInfo();
-        level3.levelID = 3;
-        level3.maxPassenger = 5;
-
-        difficultiesConfig.Add(1, level1);
-        difficultiesConfig.Add(2, level2);
-        difficultiesConfig.Add(3, level3);
-#else
-
         DifficultyInfoList difficultyList = JsonUtility.FromJson<DifficultyInfoList>("{\"DifficultyList\":" + difficultyConfigAsset.text + "}");
         foreach (var info in difficultyList.DifficultyList)
         {
             difficultiesConfig.Add(info.levelID, info);
         }
-#endif
     }
+
+    public int MaxDifficulty() { return difficultiesConfig.Count; }
 }

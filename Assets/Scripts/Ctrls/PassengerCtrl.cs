@@ -5,17 +5,17 @@ public enum EmotionState
 {
     ES_HAPPY = 0,
     ES_NEUTRAL,
-    ES_TENSION,
+    //ES_TENSION,
     ES_ANGER,
-    ES_SAD,
-    ES_MAX // never use, just as end indicator
+    //ES_SAD,
+    ES_COUNT // never use, just as end indicator
 }
 
 [System.Serializable]
 public class EmotionInfo
 {
     public EmotionState emotionId;
-    public float duration;
+    public float duration; // percentage in 100
     public int rewardId;
     public float rewardNum;
 }
@@ -60,7 +60,7 @@ public class PassengerCtrl : MonoBehaviour
 
     void Update()
     {
-        if (m_delivered)
+        if (m_delivered || m_emotionState >= EmotionState.ES_ANGER)
             return;
 
         m_currentTime += Time.deltaTime;
@@ -70,12 +70,12 @@ public class PassengerCtrl : MonoBehaviour
 
     protected void UpdateEmotionState()
     {
-        if (m_currentTime < curEmotionConfig.duration)
+        if (m_currentTime < curEmotionConfig.duration * m_bestDeliverTime)
             return;
 
         m_currentTime = 0.0f;
         int state = (int)m_emotionState + 1;
-        state = Mathf.Min(state, (int)EmotionState.ES_MAX - 1);
+        state = Mathf.Min(state, (int)EmotionState.ES_COUNT - 1);
         m_emotionState = (EmotionState)state;
     }
 

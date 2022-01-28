@@ -35,7 +35,6 @@ public class GameManager : Singleton<GameManager>
     {
         m_gameState = GameState.GS_Idle;
         m_eventManager.StartListening(Event.EVENT_PASSENGER_DELVERED, OnPassengerDelivered);
-        OnGameStart(); // test code
     }
 
     public void OnGameStart()
@@ -44,6 +43,7 @@ public class GameManager : Singleton<GameManager>
 
         m_passengersManager.OnGameStart(1);
         m_eventManager.InvokeEvent(Event.EVENT_GAME_START, new Dictionary<string, object> { { "gametime", 120.0f} });
+        m_InputManager.EnableInput(true);
     }
 
     public void OnGameOver()

@@ -1,14 +1,38 @@
 [
     {
         "levelID": 1,
-        "maxPassenger": 2
+        "maxPassenger": 1,
+        "minDeliverTime": 60,
+        "maxDeliverTime": 90,
+        "gametime": 180,
+        "passNum": 10,
+        "posibility": [
+            100.0
+        ]
     },
     {
         "levelID": 2,
-        "maxPassenger": 3
+        "maxPassenger": 2,
+        "minDeliverTime": 40,
+        "maxDeliverTime": 60,
+        "gametime": 120,
+        "passNum": 8,
+        "posibility": [
+            100.0,
+            50.0
+        ]
     },
     {
         "levelID": 3,
-        "maxPassenger": 4
+        "maxPassenger": 3,
+        "minDeliverTime": 30,
+        "maxDeliverTime": 40,
+        "gametime": 60,
+        "passNum": 5,
+        "posibility": [
+            100.0,
+            50.0,
+            20.0
+        ]
     }
 ]

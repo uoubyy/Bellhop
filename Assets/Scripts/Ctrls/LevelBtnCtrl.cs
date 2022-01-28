@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class LevelBtnCtrl : MonoBehaviour
 {
     public int m_levelID; // start from 0
 
-    private Text m_levelLable;
+    // private Text m_levelLable;
+    private TextMeshProUGUI m_levelLable;
     private Image m_btnBG;
 
     private bool m_levelPressed = false;
@@ -17,7 +19,7 @@ public class LevelBtnCtrl : MonoBehaviour
 
     void Awake()
     {
-        m_levelLable = GetComponentInChildren<Text>();
+        m_levelLable = GetComponentInChildren<TextMeshProUGUI>();
         m_btnBG = GetComponent<Image>();
     }
 

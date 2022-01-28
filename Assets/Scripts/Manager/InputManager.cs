@@ -52,6 +52,8 @@ public class InputManager : MonoBehaviour
         {
             m_btnState[keyBinding.name] = BtnState.Idle;
         }
+
+        m_enableInput = false;
     }
 
     void Update()
