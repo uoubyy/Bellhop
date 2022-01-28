@@ -33,6 +33,8 @@ public class PassengerCtrl : MonoBehaviour
 
     private EmotionInfo curEmotionConfig;
 
+    private Rigidbody m_rigidbody;
+
     public void Init(float bestDeliverTime, int targetLevel, EmotionState initialState)
     {
         m_bestDeliverTime = bestDeliverTime;
@@ -53,6 +55,7 @@ public class PassengerCtrl : MonoBehaviour
     void Start()
     {
         GameManager.Instance.GetEventManager().StartListening(Event.EVENT_ELEVATOR_STOP, OnElevatorStop);
+        m_rigidbody = GetComponent<Rigidbody>();
     }
 
     void Update()
@@ -108,5 +111,11 @@ public class PassengerCtrl : MonoBehaviour
         yield return new WaitForSeconds(3.0f);
         var poolable = gameObject.GetComponent<Poolable>();
         PoolManager.Instance.ReturnPoolable(poolable);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        transform.SetParent(other.transform);
+        m_rigidbody.isKinematic = true;
     }
 }
