@@ -17,7 +17,7 @@ public class GameManager : Singleton<GameManager>
 
     private PassengersManager m_passengersManager;
 
-    private float m_timeCountDown;
+    private float m_timeCountDown = 120.0f; // read from config
 
     private GameState m_gameState;
 
@@ -40,9 +40,10 @@ public class GameManager : Singleton<GameManager>
 
     public void OnGameStart()
     {
+        m_gameState = GameState.GS_Running;
+
         m_passengersManager.OnGameStart(1);
         m_eventManager.InvokeEvent(Event.EVENT_GAME_START, new Dictionary<string, object> { { "gametime", 120.0f} });
-        m_gameState = GameState.GS_Running;
     }
 
     public void OnGameOver()
