@@ -2,6 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum GameState
+{
+    GS_Idle,
+    GS_Running,
+    GS_GameOver
+}
+
 public class GameManager : Singleton<GameManager>
 {
     private InputManager m_InputManager;
@@ -11,6 +18,8 @@ public class GameManager : Singleton<GameManager>
     private PassengersManager m_passengersManager;
 
     private float m_timeCountDown;
+
+    private GameState m_gameState;
 
     protected override void OnAwake()
     {
@@ -24,30 +33,37 @@ public class GameManager : Singleton<GameManager>
 
     void Start()
     {
+        m_gameState = GameState.GS_Idle;
         m_eventManager.StartListening(Event.EVENT_PASSENGER_DELVERED, OnPassengerDelivered);
-        OnGameStart();
+        OnGameStart(); // test code
     }
 
     public void OnGameStart()
     {
         m_passengersManager.OnGameStart(1);
-        m_eventManager.InvokeEvent(Event.EVENT_GAME_START, null);
+        m_eventManager.InvokeEvent(Event.EVENT_GAME_START, new Dictionary<string, object> { { "gametime", 120.0f} });
+        m_gameState = GameState.GS_Running;
     }
 
     public void OnGameOver()
     {
-        // m_eventManager.InvokeEvent(Event.EVENT_GAME_OVER, null);
+        m_gameState = GameState.GS_GameOver;
+        m_eventManager.InvokeEvent(Event.EVENT_GAME_OVER, null);
     }
 
     // Update is called once per frame
     void Update()
     {
-        m_timeCountDown -= Time.deltaTime;
+        if (m_gameState == GameState.GS_Running)
+        {
+            m_timeCountDown -= Time.deltaTime;
 
-        if (m_timeCountDown <= 0.0)
-            OnGameOver();
-
+            if (m_timeCountDown <= 0.0)
+                OnGameOver();
+        }
     }
+
+    public GameState GetGameState() { return m_gameState; }
 
     public InputManager GetInputManager()
     {
