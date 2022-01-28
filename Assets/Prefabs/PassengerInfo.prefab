@@ -87,7 +87,6 @@ GameObject:
   - component: {fileID: 8213244210894356773}
   - component: {fileID: 4976921121759131809}
   - component: {fileID: 1207324264}
-  - component: {fileID: 8790609814963707934}
   m_Layer: 5
   m_Name: PassengerInfo
   m_TagString: Untagged
@@ -171,23 +170,8 @@ MonoBehaviour:
   speed: 5
   emotionSprite:
   - {fileID: 21300000, guid: 48228b1ea0845c44fab1342a7a98bc6e, type: 3}
-  - {fileID: 21300000, guid: 9b63d4f422d30cb4fba34d71c9ea92f6, type: 3}
-  - {fileID: 21300000, guid: a8150d7b17723c142a4f5141bc42818b, type: 3}
-  - {fileID: 21300000, guid: b41bc8425949c774b9f66b07fb25b88c, type: 3}
-  - {fileID: 21300000, guid: fe16937dc0611a34f9bf7c9eab47abba, type: 3}
---- !u!114 &8790609814963707934
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3887325579023205298}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b9ffe0c8d49b404ea29314ae1fa16fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  initialPoolCapacity: 10
+  - {fileID: 21300000, guid: 49ccd325171da764b8a891be15e8f873, type: 3}
+  - {fileID: 21300000, guid: 292788e373774f14caa12cbb0a1b7ab1, type: 3}
 --- !u!1 &7873173620857738994
 GameObject:
   m_ObjectHideFlags: 0

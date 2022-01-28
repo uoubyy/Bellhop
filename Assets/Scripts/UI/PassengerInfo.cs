@@ -7,7 +7,7 @@ using TMPro;
 public class PassengerInfo : MonoBehaviour
 {
     private Image m_panel;
-    private TextMeshPro m_targetLevel;
+    private TextMeshProUGUI m_targetLevel;
     private Image m_emotionIcon;
 
     public float fadeTime = 3f;
@@ -21,13 +21,11 @@ public class PassengerInfo : MonoBehaviour
     [SerializeField]
     private List<Sprite> emotionSprite = new List<Sprite>();
 
-    void Start()
+    private void Awake()
     {
         m_panel = GetComponent<Image>();
-        m_targetLevel = GetComponentInChildren<TextMeshPro>();
-        m_emotionIcon = GetComponentInChildren<Image>();
-
-        initialY = transform.position.y;
+        m_targetLevel = GetComponentInChildren<TextMeshProUGUI>();
+        m_emotionIcon = GetComponentsInChildren<Image>()[1]; // danger
     }
 
     // Update is called once per frame
@@ -52,6 +50,12 @@ public class PassengerInfo : MonoBehaviour
 
         FadeOut(new Color(1f, 1f, 1f, 1f));
 
-        transform.position = Camera.main.WorldToScreenPoint(targetPosition) + new Vector3(0.0f, 50.0f, 0.0f);
+        transform.position = Camera.main.WorldToScreenPoint(targetPosition) + new Vector3(0.0f, 100.0f, 0.0f);
+        initialY = transform.position.y;
+    }
+
+    public void UpdateEmotion(EmotionState emotion)
+    {
+        m_emotionIcon.sprite = emotionSprite[(int)emotion];
     }
 }

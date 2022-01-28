@@ -22,6 +22,8 @@ public class EmotionInfo
 
 public class PassengerCtrl : MonoBehaviour
 {
+    private int m_passengerID; // unique id
+
     private EmotionState m_emotionState;
     public float m_bestDeliverTime;
     private float m_currentTime;
@@ -35,13 +37,18 @@ public class PassengerCtrl : MonoBehaviour
 
     private Rigidbody m_rigidbody;
 
-    public void Init(float bestDeliverTime, int targetLevel, EmotionState initialState)
+    public PassengerInfo m_HUD;
+
+    public void Init(int id, float bestDeliverTime, int targetLevel, EmotionState initialState)
     {
+        m_passengerID = id;
         m_bestDeliverTime = bestDeliverTime;
         m_currentTime = 0.0f;
         m_targetLevel = targetLevel;
         m_emotionState = initialState;
         curEmotionConfig = ConfigManager.Instance.GetEmoitionConfig(initialState);
+
+        m_HUD.Init(initialState, targetLevel, transform.position);
     }
 
     public void Reset()
@@ -52,7 +59,7 @@ public class PassengerCtrl : MonoBehaviour
         m_delivered = false;
     }
 
-    void Start()
+    private void Awake()
     {
         GameManager.Instance.GetEventManager().StartListening(Event.EVENT_ELEVATOR_STOP, OnElevatorStop);
         m_rigidbody = GetComponent<Rigidbody>();
@@ -77,6 +84,8 @@ public class PassengerCtrl : MonoBehaviour
         int state = (int)m_emotionState + 1;
         state = Mathf.Min(state, (int)EmotionState.ES_COUNT - 1);
         m_emotionState = (EmotionState)state;
+
+        m_HUD.UpdateEmotion(m_emotionState);
     }
 
     public float GetReward()

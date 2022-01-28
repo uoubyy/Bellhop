@@ -13,6 +13,10 @@ public class PassengersManager : MonoBehaviour
 
     private DifficultyInfo curDifficultyInfo;
 
+    private Vector3 initialPos = new Vector3(34.1230469f, -559f, 121.300003f);
+
+    private static int passengerId = 0;
+
     public void OnGameStart(int difficulty)
     {
         CurDifficulty = difficulty;
@@ -52,14 +56,16 @@ public class PassengersManager : MonoBehaviour
             if (poolable == null)
                 return;
 
-            Vector2 offset = Random.insideUnitCircle * 10.0f;
-            poolable.gameObject.transform.position = new Vector3(offset.x, 0.0f, offset.y);// get from level pos
+            Vector2 offset = Random.insideUnitCircle * 5.0f;
+            poolable.gameObject.transform.position = initialPos + new Vector3(offset.x, 0.0f, offset.y);
 
             PassengerCtrl passenger = poolable.gameObject.GetComponent<PassengerCtrl>();
 
             float bestDeliverTime = Random.Range(curDifficultyInfo.minDeliverTime, curDifficultyInfo.maxDeliverTime);
             int targetLevel = Random.Range(1, 10);
-            passenger.Init(bestDeliverTime, targetLevel, EmotionState.ES_HAPPY);
+            passenger.Init(passengerId, bestDeliverTime, targetLevel, EmotionState.ES_HAPPY);
+
+            passengerId++;
             amount++;
         }
     }
