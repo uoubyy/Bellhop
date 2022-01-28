@@ -87,18 +87,26 @@ public class ElevatorCtrl : MonoBehaviour
 
     void FixedUpdate()
     {
+#if UNITY_EDITOR || DEBUG
+        if (Input.GetJoystickNames().Length > 0)
+#endif
+        {
+            m_pullingForce = Input.GetAxis("Vertical") * MaxForce;
+            if (!IsRunning())
+            {
+                if (m_pullingForce <= -0.5f)
+                    ChangeElevatorState(ElevateState.ES_Down);
+                else if (m_pullingForce >= 0.5f)
+                    ChangeElevatorState(ElevateState.ES_Up);
+            }
+        }
+
         if (m_elevatorState == ElevateState.ES_Idle || m_elevatorState == ElevateState.ES_Stoped)
             return;
 
         m_speed = m_rigidBody.velocity.y;
         m_height = transform.position.y - m_initialHeight;
 
-#if UNITY_EDITOR || DEBUG
-        if (Input.GetJoystickNames().Length > 0)
-#endif
-        {
-            m_pullingForce = Input.GetAxis("Vertical") * MaxForce;
-        }
 
          Vector3 moveForce = new Vector3(0, m_pullingForce, 0) - m_firctionFactor * m_rigidBody.mass * m_gravity * m_rigidBody.velocity.normalized;
          m_rigidBody.AddForce(moveForce, ForceMode.Impulse);
