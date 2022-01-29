@@ -49,10 +49,16 @@ public class StatusInfo : MonoBehaviour
         float reward = (float)message["reward"];
         gametime += reward;
         int txt = (int)reward;
-        extraTime.text = reward > 0 ? "+" + txt : "-" + txt;
+        extraTime.text = reward > 0 ? "+" + txt : txt.ToString();
+        if (reward > 0)
+            extraTime.color = new Color(104 / 255.0f, 222 / 255.0f, 26 / 255.0f);
+        else
+            extraTime.color = new Color(237 / 255.0f, 34 / 255.0f, 35 / 255.0f);
         // extraTime.transform.position = new Vector3(160.0f, 0.0f, 0.0f);
+        Vector3 start = new Vector3(230.0f, 1080 - 150.0f, 0.0f);
+        Vector3 end = new Vector3(230.0f, 1080- 50f, 0.0f);
 
-        StartCoroutine(MoveOverSeconds(extraTime.gameObject, new Vector3(230.0f, 0.0f, 0.0f), new Vector3(230.0f, 150.0f, 0.0f), 0.5f));
+        StartCoroutine(MoveOverSeconds(extraTime.gameObject, start, end, 3.0f));
     }
 
     private IEnumerator MoveOverSeconds(GameObject objectToMove, Vector3 start, Vector3 end, float seconds)

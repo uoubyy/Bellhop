@@ -48,7 +48,7 @@ public class PassengerCtrl : MonoBehaviour
         m_emotionState = initialState;
         curEmotionConfig = ConfigManager.Instance.GetEmoitionConfig(initialState);
 
-        m_HUD.Init(initialState, targetLevel, transform.position);
+        m_HUD.Init(initialState, targetLevel);
     }
 
     public void Reset()
@@ -126,5 +126,7 @@ public class PassengerCtrl : MonoBehaviour
     {
         transform.SetParent(other.transform);
         m_rigidbody.isKinematic = true;
+
+        m_HUD.UpdatePos(transform.position);
     }
 }

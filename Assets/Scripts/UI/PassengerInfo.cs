@@ -43,19 +43,26 @@ public class PassengerInfo : MonoBehaviour
         m_panel.CrossFadeColor(color, fadeTime, true, true);
     }
 
-    public void Init(EmotionState emotion, int targetLevel, Vector3 targetPosition)
+    public void Init(EmotionState emotion, int targetLevel)
     {
         m_targetLevel.text = targetLevel.ToString();
         m_emotionIcon.sprite = emotionSprite[(int)emotion];
 
-        FadeOut(new Color(1f, 1f, 1f, 1f));
+        // FadeOut(new Color(1f, 1f, 1f, 1f));
 
-        transform.position = Camera.main.WorldToScreenPoint(targetPosition) + new Vector3(0.0f, 100.0f, 0.0f);
+        gameObject.SetActive(false);
+    }
+
+    public void UpdatePos(Vector3 targetPosition)
+    {
+        transform.position = Camera.main.WorldToScreenPoint(targetPosition) + new Vector3(0.0f, 200.0f, 0.0f);
         initialY = transform.position.y;
+        gameObject.SetActive(true);
     }
 
     public void UpdateEmotion(EmotionState emotion)
     {
         m_emotionIcon.sprite = emotionSprite[(int)emotion];
+
     }
 }

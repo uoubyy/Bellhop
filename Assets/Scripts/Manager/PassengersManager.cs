@@ -58,9 +58,9 @@ public class PassengersManager : MonoBehaviour
             if (poolable == null)
                 return;
 
-            Vector2 offset = Random.insideUnitCircle * 5.0f;
-            Vector3 floorPos = elevatorFloor.transform.position;
-            poolable.gameObject.transform.position = floorPos + new Vector3(offset.x, 5.0f, offset.y);
+            Vector2 offset = Random.insideUnitCircle * 3.0f;
+            Vector3 floorPos = elevatorFloor.transform.position + new Vector3(offset.x, 1.0f, offset.y);
+            poolable.gameObject.transform.position = floorPos;
 
             PassengerCtrl passenger = poolable.gameObject.GetComponent<PassengerCtrl>();
 
