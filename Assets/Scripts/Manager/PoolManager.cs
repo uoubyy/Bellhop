@@ -26,7 +26,16 @@ public class PoolManager : Singleton<PoolManager>
 
     public void ReturnPoolable(Poolable poolable)
     {
+        poolable.transform.SetParent(transform, false);
         poolable.pool.Return(poolable);
+    }
+
+    public void ReturnAll()
+    {
+        foreach (var val in m_pools)
+        {
+            val.Value.ReturnAll();
+        }
     }
 
     void Start()

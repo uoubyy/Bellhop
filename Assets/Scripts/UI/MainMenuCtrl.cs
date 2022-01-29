@@ -14,6 +14,8 @@ public class MainMenuCtrl : MonoBehaviour
         m_startGameBtn.onClick.AddListener(OnStartGame);
         m_pauseGameBtn.onClick.AddListener(OnPauseGame);
         m_exitGameBtn.onClick.AddListener(OnExitGame);
+
+        GameManager.Instance.GetEventManager().StartListening(Event.EVENT_GAME_OVER, OnGameOver);
     }
 
     private void OnStartGame()
@@ -30,5 +32,10 @@ public class MainMenuCtrl : MonoBehaviour
     private void OnExitGame()
     {
         Application.Quit();
+    }
+
+    private void OnGameOver(Dictionary<string, object> message)
+    {
+        gameObject.SetActive(true);
     }
 }

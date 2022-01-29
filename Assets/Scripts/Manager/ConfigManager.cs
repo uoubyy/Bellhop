@@ -40,6 +40,7 @@ public class ConfigManager : Singleton<ConfigManager>
     
     // difficulty start from 1
     public DifficultyInfo GetDifficultyConfig(int difficulty) {
+        difficulty = Mathf.Min(1, difficultiesConfig.Count);
         return difficultiesConfig[difficulty];
     }
 

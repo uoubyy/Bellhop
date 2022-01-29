@@ -13,9 +13,11 @@ public class PassengersManager : MonoBehaviour
 
     private DifficultyInfo curDifficultyInfo;
 
-    private Vector3 initialPos = new Vector3(34.1230469f, -559f, 121.300003f);
+    //private Vector3 initialPos = new Vector3(34.1230469f, -559f, 121.300003f);
 
     private static int passengerId = 0;
+
+    public GameObject elevatorFloor;
 
     public void OnGameStart(int difficulty)
     {
@@ -35,7 +37,7 @@ public class PassengersManager : MonoBehaviour
         SpawnPassengers();
     }
 
-    private void SpawnPassengers()
+    private void SpawnPassengers() // TODO
     {
         if(deliveredAmount >= curDifficultyInfo.passNum)
         {
@@ -57,7 +59,8 @@ public class PassengersManager : MonoBehaviour
                 return;
 
             Vector2 offset = Random.insideUnitCircle * 5.0f;
-            poolable.gameObject.transform.position = initialPos + new Vector3(offset.x, 0.0f, offset.y);
+            Vector3 floorPos = elevatorFloor.transform.position;
+            poolable.gameObject.transform.position = floorPos + new Vector3(offset.x, 5.0f, offset.y);
 
             PassengerCtrl passenger = poolable.gameObject.GetComponent<PassengerCtrl>();
 

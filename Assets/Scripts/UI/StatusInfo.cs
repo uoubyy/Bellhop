@@ -8,7 +8,7 @@ public class StatusInfo : MonoBehaviour
     public TextMeshProUGUI countDownTime;
     private float gametime;
 
-
+    public TextMeshProUGUI extraTime; 
 
     // Start is called before the first frame update
     void Start()
@@ -48,10 +48,23 @@ public class StatusInfo : MonoBehaviour
     {
         float reward = (float)message["reward"];
         gametime += reward;
+        int txt = (int)reward;
+        extraTime.text = reward > 0 ? "+" + txt : "-" + txt;
+        // extraTime.transform.position = new Vector3(160.0f, 0.0f, 0.0f);
+
+        StartCoroutine(MoveOverSeconds(extraTime.gameObject, new Vector3(230.0f, 0.0f, 0.0f), new Vector3(230.0f, 150.0f, 0.0f), 0.5f));
     }
 
-    private void ShowExtraTime()
+    private IEnumerator MoveOverSeconds(GameObject objectToMove, Vector3 start, Vector3 end, float seconds)
     {
-
+        float elapsedTime = 0;
+        Vector3 startingPos = objectToMove.transform.position;
+        while (elapsedTime < seconds)
+        {
+            objectToMove.transform.position = Vector3.Lerp(start, end, (elapsedTime / seconds));
+            elapsedTime += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+        objectToMove.transform.position = end;
     }
 }

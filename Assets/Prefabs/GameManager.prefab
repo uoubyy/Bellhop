@@ -87,6 +87,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurDifficulty: 1
   passengerPrefab: {fileID: 2429651935202729207, guid: 086622b83e9501549af682f7213ceb64, type: 3}
+  elevatorFloor: {fileID: 0}
 --- !u!114 &1266917649396472286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,4 +135,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   floorPrefab: {fileID: 698971513596554476, guid: f5195daaffc027644a49fe4a212e27d7, type: 3}
+  floorHeight: 0
   initialCapacity: 10

@@ -4,7 +4,7 @@
         "maxPassenger": 1,
         "minDeliverTime": 60,
         "maxDeliverTime": 90,
-        "gametime": 180.0,
+        "gametime": 30.0,
         "passNum": 10,
         "posibility": [
             100.0

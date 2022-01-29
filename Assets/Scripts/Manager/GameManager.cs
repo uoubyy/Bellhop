@@ -19,7 +19,7 @@ public class GameManager : Singleton<GameManager>
 
     private FloorManager m_floorManager;
 
-    private float m_timeCountDown = 120.0f; // read from config
+    private float m_timeCountDown = 0.0f; // read from config
 
     private GameState m_gameState;
 
@@ -47,6 +47,7 @@ public class GameManager : Singleton<GameManager>
         m_passengersManager.OnGameStart(1);
 
         DifficultyInfo levelInfo = ConfigManager.Instance.GetDifficultyConfig(1);
+        m_timeCountDown = levelInfo.gametime;
 
         m_eventManager.InvokeEvent(Event.EVENT_GAME_START, new Dictionary<string, object> { { "gametime", levelInfo.gametime } });
         m_InputManager.EnableInput(true);
@@ -55,6 +56,7 @@ public class GameManager : Singleton<GameManager>
     public void OnGameOver()
     {
         m_gameState = GameState.GS_GameOver;
+        PoolManager.Instance.ReturnAll();
         m_eventManager.InvokeEvent(Event.EVENT_GAME_OVER, null);
     }
 
