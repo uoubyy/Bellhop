@@ -34,6 +34,10 @@ public class PassengersManager : MonoBehaviour
     void OnPassengerDeliver(Dictionary<string, object> message)
     {
         deliveredAmount++;
+        if (deliveredAmount == 4)
+            GameManager.Instance.GetEventManager().InvokeEvent(Event.EVENT_CATASTROPHE_FIRE, new Dictionary<string, object> { { "deliveredAmount", deliveredAmount }, { "duration", 3.0f } });
+        else if(deliveredAmount == 10)
+            GameManager.Instance.GetEventManager().InvokeEvent(Event.EVENT_CATASTROPHE_FIRE, new Dictionary<string, object> { { "deliveredAmount", deliveredAmount }, { "duration", 3.0f } });
         SpawnPassengers();
     }
 
@@ -51,8 +55,8 @@ public class PassengersManager : MonoBehaviour
         while (amount < curDifficultyInfo.maxPassenger)
         {
             float rate = Random.Range(1.0f, 100.0f);
-            if (rate > curDifficultyInfo.posibility[amount])
-                return;
+/*            if (rate > curDifficultyInfo.posibility[amount])
+                return;*/
 
             var poolable = Poolable.TryGetPoolable<Poolable>(passengerPrefab);
             if (poolable == null)

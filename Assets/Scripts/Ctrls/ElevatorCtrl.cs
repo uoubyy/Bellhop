@@ -12,7 +12,9 @@ public class ElevatorCtrl : MonoBehaviour
         ES_Up,
         ES_Down,
         ES_Stopping,
-        ES_Stoped
+        ES_Stoped,
+        ES_Catastrophe,
+        ES_FreeFall
     }
 
     public Text m_speedIndictor;
@@ -23,7 +25,8 @@ public class ElevatorCtrl : MonoBehaviour
     public float MaxSpeed = 100.0f;
     public float MaxForce = 100.0f;
 
-    public float m_gravity = 9.8f;
+    private float m_gravity = 9.8f;
+    public float m_gravityScale = 1.0f;
     public float m_firctionFactor = 0.2f;
 
     private float m_floorHeight = 60.0f;
@@ -43,6 +46,10 @@ public class ElevatorCtrl : MonoBehaviour
 
     private float m_initialHeight;
 
+    private bool m_bFreeFalling = false;
+
+    private int m_shiftAmount = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -51,6 +58,11 @@ public class ElevatorCtrl : MonoBehaviour
 
         GameManager.Instance.GetEventManager().StartListening(Event.EVENT_GAME_START, OnGameStart);
         GameManager.Instance.GetEventManager().StartListening(Event.EVENT_GAME_OVER, OnGameOver);
+
+        GameManager.Instance.GetEventManager().StartListening(Event.EVENT_CATASTROPHE_FIRE, OnCatastropheFire);
+        GameManager.Instance.GetEventManager().StartListening(Event.EVENT_ELEVATOR_FREE_FALL, OnElevatorFreeFall);
+
+        GameManager.Instance.GetEventManager().StartListening(Event.EVENT_PRESS_SHIFT, OnPressShift);
 
         m_rigidBody = GetComponent<Rigidbody>();
         m_initialHeight = transform.position.y;
@@ -73,6 +85,8 @@ public class ElevatorCtrl : MonoBehaviour
     private void Reset()
     {
         ChangeElevatorState(ElevateState.ES_Idle);
+        m_shiftAmount = 0;
+        m_bFreeFalling = false;
     }
 
     // Update is called once per frame
@@ -106,6 +120,9 @@ public class ElevatorCtrl : MonoBehaviour
                 ChangeElevatorState(ElevateState.ES_Stopping);
             }
         }
+
+        if (m_elevatorState == ElevateState.ES_Catastrophe) // TODO SPECIAL EVENT 
+            m_pullingForce = -m_gravity * m_gravityScale * m_rigidBody.mass;
 
         if (m_elevatorState == ElevateState.ES_Idle || m_elevatorState == ElevateState.ES_Stoped)
             return;
@@ -194,8 +211,45 @@ public class ElevatorCtrl : MonoBehaviour
                 GameManager.Instance.GetEventManager().InvokeEvent(Event.EVENT_ELEVATOR_STOP, new Dictionary<string, object> { { "level", m_height / m_floorHeight } });
                 m_rigidBody.isKinematic = true;
                 break;
+            case ElevateState.ES_Catastrophe:
+                m_rigidBody.isKinematic = true;
+                break;
+            case ElevateState.ES_FreeFall:
+                m_rigidBody.isKinematic = false;
+                break;
         }
 
         m_elevatorState = newState;
+    }
+
+    private void OnCatastropheFire(Dictionary<string, object> message)
+    {
+        float stateTime = (float)message["duration"];
+        ChangeElevatorState(ElevateState.ES_Catastrophe);
+
+        int deliveredAmount = (int)message["deliveredAmount"];
+        if(deliveredAmount == 4)
+        {
+            m_shiftAmount = (int)Random.Range(1.0f, 7.0f);
+        }else if(deliveredAmount == 10)
+        {
+            m_shiftAmount = (int)Random.Range(1.0f, 7.0f);
+        }
+    }
+
+    private void OnElevatorFreeFall (Dictionary<string, object> message)
+    {
+        m_bFreeFalling = !m_bFreeFalling;
+        ChangeElevatorState(m_bFreeFalling ? ElevateState.ES_FreeFall : ElevateState.ES_Stopping);
+    }
+
+    private void OnPressShift(Dictionary<string, object> message)
+    {
+        if (m_elevatorState == ElevateState.ES_Catastrophe)
+        {
+            m_shiftAmount--;
+            if (m_shiftAmount <= 0)
+                ChangeElevatorState(ElevateState.ES_Stoped);
+        }
     }
 }

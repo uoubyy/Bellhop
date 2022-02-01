@@ -5,7 +5,7 @@
         "minDeliverTime": 60,
         "maxDeliverTime": 90,
         "gametime": 30.0,
-        "passNum": 10,
+        "passNum": 4,
         "posibility": [
             100.0
         ]
@@ -19,7 +19,7 @@
         "passNum": 8,
         "posibility": [
             100.0,
-            50.0
+            100.0
         ]
     },
     {

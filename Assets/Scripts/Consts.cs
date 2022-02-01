@@ -12,4 +12,10 @@ public class Event
     public const string EVENT_ELEVATOR_STOP = "event_elevator_stop";
 
     public const string EVENT_PASSENGER_DELVERED = "event_passenger_delivered";
+
+    public const string EVENT_CATASTROPHE_FIRE = "event_catastrophe_fire";
+
+    public const string EVENT_ELEVATOR_FREE_FALL = "event_elevator_free_fall";
+
+    public const string EVENT_PRESS_SHIFT = "event_press_shift";
 }

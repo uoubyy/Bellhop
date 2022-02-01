@@ -61,8 +61,13 @@ public class InputManager : MonoBehaviour
         m_inputs.Clear();
 
         if (!m_enableInput) return;
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
 
-        foreach (KeyBinding keyBinding in m_keyBinding.KeyBindingsList)
+        }
+
+
+            foreach (KeyBinding keyBinding in m_keyBinding.KeyBindingsList)
         {
             bool keyUp = false, keyDown = false;
 #if UNITY_EDITOR || DEBUG

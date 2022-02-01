@@ -70,5 +70,17 @@
         "name": "event_elevator_down",
         "key1": "right",
         "key2": ""
+    },
+    {
+        "ID": 99,
+        "name": "event_elevator_free_fall",
+        "key1": "space",
+        "key2": ""
+    },
+    {
+        "ID": 99,
+        "name": "event_press_shift",
+        "key1": "right shift",
+        "key2": ""
     }
 ]
