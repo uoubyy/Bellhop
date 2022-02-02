@@ -63,13 +63,13 @@ public class GameManager : Singleton<GameManager>
     // Update is called once per frame
     void Update()
     {
-        if (m_gameState == GameState.GS_Running)
+/*        if (m_gameState == GameState.GS_Running)
         {
             m_timeCountDown -= Time.deltaTime;
 
             if (m_timeCountDown <= 0.0)
                 OnGameOver();
-        }
+        }*/
     }
 
     public GameState GetGameState() { return m_gameState; }

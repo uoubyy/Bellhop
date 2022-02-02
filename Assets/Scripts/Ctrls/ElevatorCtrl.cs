@@ -73,7 +73,7 @@ public class ElevatorCtrl : MonoBehaviour
     public void OnGameStart(Dictionary<string, object> message)
     {
         m_runningTime = 0.0f;
-        m_maxHeight = m_floorHeight * 9;
+        m_maxHeight = m_floorHeight * 9 + 5.0f; // some magic code
     }
 
     public void OnGameOver(Dictionary<string, object> message)
