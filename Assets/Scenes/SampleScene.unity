@@ -123,6 +123,36 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &19220111
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 19220112}
+  m_Layer: 0
+  m_Name: passengerSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &19220112
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 19220111}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -559.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1454586438}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &40973945
 GameObject:
   m_ObjectHideFlags: 0
@@ -391,6 +421,96 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 89068034}
   m_CullTransparentMesh: 1
+--- !u!1 &97444682
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 97444683}
+  m_Layer: 0
+  m_Name: passengerSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &97444683
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 97444682}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -559.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 609911305}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &173626898
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 173626899}
+  m_Layer: 0
+  m_Name: passengerSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &173626899
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 173626898}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -559.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2007661600}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &179077797
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 179077798}
+  m_Layer: 0
+  m_Name: passengerSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &179077798
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 179077797}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -559.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1926593622}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &202601887
 GameObject:
   m_ObjectHideFlags: 0
@@ -1402,6 +1522,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_levelID: 9
+--- !u!1 &370252605
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 370252606}
+  m_Layer: 0
+  m_Name: passengerSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &370252606
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 370252605}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -559.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1618341678}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &478993551
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1459,6 +1609,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5195daaffc027644a49fe4a212e27d7, type: 3}
+--- !u!4 &478993552 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 698971513596554467, guid: f5195daaffc027644a49fe4a212e27d7, type: 3}
+  m_PrefabInstance: {fileID: 478993551}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &501063521
 GameObject:
   m_ObjectHideFlags: 0
@@ -1939,6 +2094,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5195daaffc027644a49fe4a212e27d7, type: 3}
+--- !u!4 &609911305 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 698971513596554467, guid: f5195daaffc027644a49fe4a212e27d7, type: 3}
+  m_PrefabInstance: {fileID: 609911304}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &669176935
 GameObject:
   m_ObjectHideFlags: 0
@@ -2887,6 +3047,66 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 812913351}
   m_CullTransparentMesh: 1
+--- !u!1 &815020601
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 815020602}
+  m_Layer: 0
+  m_Name: passengerSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &815020602
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 815020601}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -559.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 855551932}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &844114226
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 844114227}
+  m_Layer: 0
+  m_Name: passengerSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &844114227
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 844114226}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -559.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2086155512}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &855551931
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2944,6 +3164,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5195daaffc027644a49fe4a212e27d7, type: 3}
+--- !u!4 &855551932 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 698971513596554467, guid: f5195daaffc027644a49fe4a212e27d7, type: 3}
+  m_PrefabInstance: {fileID: 855551931}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &870606909
 GameObject:
   m_ObjectHideFlags: 0
@@ -3867,6 +4092,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1124333362}
   m_CullTransparentMesh: 1
+--- !u!1 &1181648751
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1181648752}
+  m_Layer: 0
+  m_Name: passengerSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1181648752
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1181648751}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -559.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1305514311}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1193803402
 GameObject:
   m_ObjectHideFlags: 0
@@ -4153,6 +4408,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5195daaffc027644a49fe4a212e27d7, type: 3}
+--- !u!4 &1305514311 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 698971513596554467, guid: f5195daaffc027644a49fe4a212e27d7, type: 3}
+  m_PrefabInstance: {fileID: 1305514310}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1323363523 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b43c32b490c4da94195efefd304f75fe, type: 3}
@@ -4485,6 +4745,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5195daaffc027644a49fe4a212e27d7, type: 3}
+--- !u!4 &1454586438 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 698971513596554467, guid: f5195daaffc027644a49fe4a212e27d7, type: 3}
+  m_PrefabInstance: {fileID: 1454586437}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1457308051
 GameObject:
   m_ObjectHideFlags: 0
@@ -4826,6 +5091,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5195daaffc027644a49fe4a212e27d7, type: 3}
+--- !u!4 &1551889574 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 698971513596554467, guid: f5195daaffc027644a49fe4a212e27d7, type: 3}
+  m_PrefabInstance: {fileID: 1551889573}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1618341677
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4883,6 +5153,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5195daaffc027644a49fe4a212e27d7, type: 3}
+--- !u!4 &1618341678 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 698971513596554467, guid: f5195daaffc027644a49fe4a212e27d7, type: 3}
+  m_PrefabInstance: {fileID: 1618341677}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1638775785
 GameObject:
   m_ObjectHideFlags: 0
@@ -5152,6 +5427,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_levelID: 2
+--- !u!1 &1718221842
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1718221843}
+  m_Layer: 0
+  m_Name: passengerSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1718221843
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1718221842}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -559.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 478993552}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1728818825
 GameObject:
   m_ObjectHideFlags: 0
@@ -5231,6 +5536,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1728818825}
   m_CullTransparentMesh: 1
+--- !u!1 &1816253018
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1816253019}
+  m_Layer: 0
+  m_Name: passengerSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1816253019
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1816253018}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -559.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1551889574}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1827258044
 GameObject:
   m_ObjectHideFlags: 0
@@ -5422,6 +5757,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5195daaffc027644a49fe4a212e27d7, type: 3}
+--- !u!4 &1926593622 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 698971513596554467, guid: f5195daaffc027644a49fe4a212e27d7, type: 3}
+  m_PrefabInstance: {fileID: 1926593621}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1947458549
 GameObject:
   m_ObjectHideFlags: 0
@@ -5740,6 +6080,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5195daaffc027644a49fe4a212e27d7, type: 3}
+--- !u!4 &2007661600 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 698971513596554467, guid: f5195daaffc027644a49fe4a212e27d7, type: 3}
+  m_PrefabInstance: {fileID: 2007661599}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2010649680
 GameObject:
   m_ObjectHideFlags: 0
@@ -5915,6 +6260,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5195daaffc027644a49fe4a212e27d7, type: 3}
+--- !u!4 &2086155512 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 698971513596554467, guid: f5195daaffc027644a49fe4a212e27d7, type: 3}
+  m_PrefabInstance: {fileID: 2086155511}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1286049178201730347
 PrefabInstance:
   m_ObjectHideFlags: 0
