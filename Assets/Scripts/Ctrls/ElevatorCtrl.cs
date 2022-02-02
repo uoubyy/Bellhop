@@ -121,7 +121,7 @@ public class ElevatorCtrl : MonoBehaviour
             }
         }
 
-        if (m_elevatorState == ElevateState.ES_Catastrophe) // TODO SPECIAL EVENT 
+        if (m_elevatorState == ElevateState.ES_FreeFall) // TODO SPECIAL EVENT 
             m_pullingForce = -m_gravity * m_gravityScale * m_rigidBody.mass;
 
         if (m_elevatorState == ElevateState.ES_Idle || m_elevatorState == ElevateState.ES_Stoped)
@@ -209,6 +209,7 @@ public class ElevatorCtrl : MonoBehaviour
                 break;
             case ElevateState.ES_Stoped:
                 GameManager.Instance.GetEventManager().InvokeEvent(Event.EVENT_ELEVATOR_STOP, new Dictionary<string, object> { { "level", m_height / m_floorHeight } });
+                m_bFreeFalling = false;
                 m_rigidBody.isKinematic = true;
                 break;
             case ElevateState.ES_Catastrophe:
@@ -239,8 +240,11 @@ public class ElevatorCtrl : MonoBehaviour
 
     private void OnElevatorFreeFall (Dictionary<string, object> message)
     {
-        m_bFreeFalling = !m_bFreeFalling;
-        ChangeElevatorState(m_bFreeFalling ? ElevateState.ES_FreeFall : ElevateState.ES_Stopping);
+        if ((bool)message["pressed"])
+        {
+            m_bFreeFalling = !m_bFreeFalling;
+            ChangeElevatorState(m_bFreeFalling ? ElevateState.ES_FreeFall : ElevateState.ES_Stopping);
+        }
     }
 
     private void OnPressShift(Dictionary<string, object> message)
