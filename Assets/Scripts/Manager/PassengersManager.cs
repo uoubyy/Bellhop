@@ -17,7 +17,7 @@ public class PassengersManager : MonoBehaviour
 
     private static int passengerId = 0;
 
-    public GameObject elevatorFloor;
+    public GameObject passengerSpawnPoint;
 
     public void OnGameStart(int difficulty)
     {
@@ -28,20 +28,21 @@ public class PassengersManager : MonoBehaviour
 
         Assert.IsNotNull(passengerPrefab);
 
-        SpawnPassengers();
+        SpawnPassengers(0);
     }
 
     void OnPassengerDeliver(Dictionary<string, object> message)
     {
+        int level = (int)message["level"];
         deliveredAmount++;
         if (deliveredAmount == 4)
             GameManager.Instance.GetEventManager().InvokeEvent(Event.EVENT_CATASTROPHE_FIRE, new Dictionary<string, object> { { "deliveredAmount", deliveredAmount }, { "duration", 3.0f } });
         else if(deliveredAmount == 10)
             GameManager.Instance.GetEventManager().InvokeEvent(Event.EVENT_CATASTROPHE_FIRE, new Dictionary<string, object> { { "deliveredAmount", deliveredAmount }, { "duration", 3.0f } });
-        SpawnPassengers();
+        SpawnPassengers(level);
     }
 
-    private void SpawnPassengers() // TODO
+    private void SpawnPassengers(int spawnLevel) // TODO
     {
         if(deliveredAmount >= curDifficultyInfo.passNum)
         {
@@ -63,7 +64,7 @@ public class PassengersManager : MonoBehaviour
                 return;
 
             Vector2 offset = Random.insideUnitCircle * 3.0f;
-            Vector3 floorPos = elevatorFloor.transform.position + new Vector3(offset.x, 1.0f, offset.y);
+            Vector3 floorPos = new Vector3(offset.x, 60.0f * spawnLevel + 1.0f, offset.y) + passengerSpawnPoint.transform.position;
             poolable.gameObject.transform.position = floorPos;
 
             PassengerCtrl passenger = poolable.gameObject.GetComponent<PassengerCtrl>();

@@ -50,6 +50,9 @@ public class ElevatorCtrl : MonoBehaviour
 
     private int m_shiftAmount = 0;
 
+    public GameObject m_leftDoor;
+    public GameObject m_rightDoor;
+
     // Start is called before the first frame update
     void Start()
     {
