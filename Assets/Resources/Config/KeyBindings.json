@@ -3,21 +3,21 @@
         "ID": 0,
         "name": "Level0",
         "key1": "a",
-        "key2": "",
+        "key2": "a",
         "canDisable": true
     },
     {
         "ID": 1,
         "name": "Level1",
         "key1": "s",
-        "key2": "",
+        "key2": "s",
         "canDisable": true
     },
     {
         "ID": 2,
         "name": "Level2",
         "key1": "d",
-        "key2": "",
+        "key2": "d",
         "canDisable": true
     },
     {

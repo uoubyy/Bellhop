@@ -64,13 +64,13 @@ public class InputManager : MonoBehaviour
         foreach (KeyBinding keyBinding in m_keyBinding.KeyBindingsList)
         {
             bool keyUp = false, keyDown = false;
-#if UNITY_EDITOR || DEBUG
+
             keyDown = Input.GetKeyDown(keyBinding.key1);
             keyUp = Input.GetKeyUp(keyBinding.key1);
-#else
+/*#else
             keyDown = Input.GetKeyDown(keyBinding.key2);
             keyUp = Input.GetKeyUp(keyBinding.key2);
-#endif
+#endif*/
 
             if (!m_enableInput && keyBinding.canDisable)
                 continue;

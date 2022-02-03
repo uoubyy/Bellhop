@@ -127,7 +127,7 @@ public class PassengerCtrl : MonoBehaviour
         {
             elapsedTime += Time.deltaTime;
 
-            transform.position += new Vector3(0.0f, 0.0f, 0.1f);
+            transform.position += new Vector3(0.0f, 0.0f, 30f) * Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
         Reset();
@@ -143,7 +143,7 @@ public class PassengerCtrl : MonoBehaviour
         {
             elapsedTime += Time.deltaTime;
 
-            transform.position += new Vector3(0.0f, 0.0f, -0.1f);
+            transform.position += new Vector3(0.0f, 0.0f, -30f) * Time.deltaTime;
             m_HUD.UpdatePos(transform.position);
             yield return new WaitForEndOfFrame();
         }

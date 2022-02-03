@@ -39,11 +39,11 @@ public class PassengersManager : MonoBehaviour
         int level = (int)message["level"];
         Debug.Log("OnPassengerDeliver " + level);
         deliveredAmount++;
+        SpawnPassengers(level);
         if (deliveredAmount == 4)
             GameManager.Instance.GetEventManager().InvokeEvent(Event.EVENT_CATASTROPHE_FIRE, new Dictionary<string, object> { { "deliveredAmount", deliveredAmount }, { "duration", 3.0f } });
         else if(deliveredAmount == 10)
             GameManager.Instance.GetEventManager().InvokeEvent(Event.EVENT_CATASTROPHE_FIRE, new Dictionary<string, object> { { "deliveredAmount", deliveredAmount }, { "duration", 3.0f } });
-        SpawnPassengers(level);
     }
 
     private void SpawnPassengers(int spawnLevel) // TODO
@@ -51,7 +51,7 @@ public class PassengersManager : MonoBehaviour
         if(deliveredAmount >= curDifficultyInfo.passNum)
         {
             CurDifficulty++;
-            deliveredAmount = 0;
+            //deliveredAmount = 0;
             CurDifficulty = Mathf.Max(CurDifficulty, ConfigManager.Instance.MaxDifficulty());
             curDifficultyInfo = ConfigManager.Instance.GetDifficultyConfig(CurDifficulty);
         }
@@ -67,7 +67,7 @@ public class PassengersManager : MonoBehaviour
             if (poolable == null)
                 return;
 
-            float offset = Random.Range(-5.0f, 5.0f);
+            float offset = Random.Range(-10.0f, 10.0f);
             Vector3 floorPos = new Vector3(offset, 60.0f * spawnLevel + 1.0f, 0.0f) + spawnPointHeight;
             poolable.gameObject.transform.position = floorPos;
 

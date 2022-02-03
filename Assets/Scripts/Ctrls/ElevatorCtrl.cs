@@ -122,7 +122,7 @@ public class ElevatorCtrl : MonoBehaviour
             float dist = Mathf.Abs(transform.position.y - m_targetStopPos.y);
             if (Mathf.Abs(transform.position.y - m_targetStopPos.y) >= 0.005f)
             {
-                transform.position = Vector3.MoveTowards(transform.position, m_targetStopPos, 10.0f * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, m_targetStopPos, 15.0f * Time.deltaTime);
             }
             else
             {
@@ -136,28 +136,30 @@ public class ElevatorCtrl : MonoBehaviour
         if (m_elevatorState == ElevateState.ES_Catastrophe)
             return;
 
-#if UNITY_EDITOR || DEBUG
-        if (Input.GetJoystickNames().Length > 0)
-#endif
-        {
-            m_pullingForce = Input.GetAxis("Vertical") * MaxForce;
-            if (!IsRunning())
-            {
-                if (m_pullingForce <= -0.5f)
-                    ChangeElevatorState(ElevateState.ES_Down);
-                else if (m_pullingForce >= 0.5f)
-                    ChangeElevatorState(ElevateState.ES_Up);
-            }
-            else if(m_pullingForce >= -0.5f && m_pullingForce <= 0.5f)
-            {
-                ChangeElevatorState(ElevateState.ES_Stopping);
-            }
-        }
-
         if (m_elevatorState == ElevateState.ES_FreeFall) // TODO SPECIAL EVENT 
         {
             m_pullingForce = -m_gravity * m_gravityScale * m_rigidBody.mass;
             Debug.Log(string.Format("Free fall force: {0}", m_pullingForce));
+        }
+        else
+        {
+#if UNITY_EDITOR || DEBUG
+            if (Input.GetJoystickNames().Length > 0)
+#endif
+            {
+                m_pullingForce = Input.GetAxis("Vertical") * MaxForce;
+                if (!IsRunning())
+                {
+                    if (m_pullingForce <= -0.5f)
+                        ChangeElevatorState(ElevateState.ES_Down);
+                    else if (m_pullingForce >= 0.5f)
+                        ChangeElevatorState(ElevateState.ES_Up);
+                }
+                else if (m_pullingForce >= -0.5f && m_pullingForce <= 0.5f)
+                {
+                    ChangeElevatorState(ElevateState.ES_Stopping);
+                }
+            }
         }
 
         if (m_elevatorState == ElevateState.ES_Idle || m_elevatorState == ElevateState.ES_Stoped)
@@ -183,14 +185,14 @@ public class ElevatorCtrl : MonoBehaviour
 
         if (m_elevatorState == ElevateState.ES_Stopping)
         {
-            if(m_rigidBody.velocity.magnitude <= 8.0f)
+            if(m_rigidBody.velocity.magnitude <= 5.0f)
             {
                 if (m_rigidBody.velocity.y >= 0.5f ) // face up
                     m_targetStopPos = new Vector3(0.0f, m_initialHeight + Mathf.Ceil(m_height / m_floorHeight) * m_floorHeight, 0.0f);
                 else if(m_rigidBody.velocity.y <= -0.5f)
                     m_targetStopPos = new Vector3(0.0f, m_initialHeight + Mathf.Floor(m_height / m_floorHeight) * m_floorHeight, 0.0f);
 
-                if (Mathf.Abs(m_targetStopPos.y - transform.position.y) <= m_floorHeight * 0.4f)
+                if (Mathf.Abs(m_targetStopPos.y - transform.position.y) <= m_floorHeight * 0.3f)
                     ChangeElevatorState(ElevateState.ES_PreStop);
                 else if(m_rigidBody.velocity.magnitude <= 2.0f)
                     ChangeElevatorState(ElevateState.ES_Stoped);
@@ -312,11 +314,8 @@ public class ElevatorCtrl : MonoBehaviour
             m_shiftAmount--;
             if (m_shiftAmount <= 0)
             {
-                m_fileEffect.Stop();
                 m_waterEffect.Play();
-                GameManager.Instance.GetInputManager().EnableInput(true);
                 ChangeElevatorState(ElevateState.ES_Stoped);
-
                 StartCoroutine(StopWater());
             }
         }
@@ -324,8 +323,18 @@ public class ElevatorCtrl : MonoBehaviour
 
     IEnumerator StopWater()
     {
-        yield return new WaitForSeconds(0.5f);
+        float maxTime = 1.0f;
+        float particleAmount = m_fileEffect.particleCount;
+        float speed = particleAmount / 1.0f;
+        while (m_fileEffect.particleCount > 0 && maxTime > 0.0f)
+        {
+            m_fileEffect.maxParticles -= 1;
+            maxTime -= Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+        GameManager.Instance.GetInputManager().EnableInput(true);
         m_waterEffect.Stop();
+        m_fileEffect.Stop();
     }
 
     private void OnLevelArrived()
