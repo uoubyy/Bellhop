@@ -50,15 +50,15 @@ public class LevelBtnCtrl : MonoBehaviour
 
     void OnElevatorStop(Dictionary<string, object> message)
     {
-        float elevatorLevel = (float)message["level"];
+        float elevatorLevel = (int)message["level"];
 
         Debug.Log(string.Format("{0} => {1}", m_minHeight, m_maxHeight));
-        if(elevatorLevel >= m_minHeight && elevatorLevel <= m_maxHeight /*&& m_levelPressed*/)
+        if(elevatorLevel == m_levelID /*&& m_levelPressed*/)
         {
             m_levelPressed = false;
             m_btnBG.color = Color.green;
 
-            GameManager.Instance.OnLevelArrived(m_levelID);
+            //GameManager.Instance.OnLevelArrived(m_levelID);
 
             StartCoroutine(PassengerOff());
         }

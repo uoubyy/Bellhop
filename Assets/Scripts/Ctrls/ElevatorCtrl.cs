@@ -12,6 +12,7 @@ public class ElevatorCtrl : MonoBehaviour
         ES_Up,
         ES_Down,
         ES_Stopping,
+        ES_PreStop,
         ES_Stoped,
         ES_Catastrophe,
         ES_FreeFall
@@ -52,6 +53,7 @@ public class ElevatorCtrl : MonoBehaviour
 
     public GameObject m_leftDoor;
     public GameObject m_rightDoor;
+    private Vector3 m_targetStopPos;
 
     // Start is called before the first frame update
     void Start()
@@ -76,7 +78,9 @@ public class ElevatorCtrl : MonoBehaviour
     public void OnGameStart(Dictionary<string, object> message)
     {
         m_runningTime = 0.0f;
-        m_maxHeight = m_floorHeight * 9 + 5.0f; // some magic code
+        m_maxHeight = m_floorHeight * 9; // some magic code
+
+        //StartCoroutine(CloseTheDoor());
     }
 
     public void OnGameOver(Dictionary<string, object> message)
@@ -102,6 +106,17 @@ public class ElevatorCtrl : MonoBehaviour
             m_runningTime += Time.deltaTime;
 
         m_timeIndictor.text = string.Format("Time {0,7:f3}", m_runningTime);
+
+        if(m_elevatorState == ElevateState.ES_PreStop)
+        {
+            float dist = Mathf.Abs(transform.position.y - m_targetStopPos.y);
+            if (Mathf.Abs(transform.position.y - m_targetStopPos.y) >= 0.005f)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, m_targetStopPos, 10.0f * Time.deltaTime);
+            }
+            else
+                ChangeElevatorState(ElevateState.ES_Stoped);
+        }
     }
 
     void FixedUpdate()
@@ -137,18 +152,31 @@ public class ElevatorCtrl : MonoBehaviour
          Vector3 moveForce = new Vector3(0, m_pullingForce, 0) - m_firctionFactor * m_rigidBody.mass * m_gravity * m_rigidBody.velocity.normalized;
          m_rigidBody.AddForce(moveForce, ForceMode.Impulse);
 
-        if (m_elevatorState == ElevateState.ES_Stopping && m_rigidBody.velocity.magnitude <= 2.0f)
+        if (m_rigidBody.velocity.y >= 0.5f && transform.position.y - m_initialHeight >= m_maxHeight - 1.0f) // facing up
         {
             ChangeElevatorState(ElevateState.ES_Stoped);
+            transform.position = new Vector3(transform.position.x, m_initialHeight + m_maxHeight, transform.position.z);
         }
         else if (m_rigidBody.velocity.y <= -0.5f && transform.position.y - m_initialHeight <= 1.0f) // facing down
         {
             ChangeElevatorState(ElevateState.ES_Stoped);
             transform.position = new Vector3(transform.position.x, m_initialHeight, transform.position.z);
-        }else if(m_rigidBody.velocity.y >= 0.5f && transform.position.y - m_initialHeight >= m_maxHeight - 1.0f) // facing up
+        }
+
+        if (m_elevatorState == ElevateState.ES_Stopping)
         {
-            ChangeElevatorState(ElevateState.ES_Stoped);
-            transform.position = new Vector3(transform.position.x, m_initialHeight + m_maxHeight, transform.position.z);
+            if(m_rigidBody.velocity.magnitude <= 8.0f)
+            {
+                if (m_rigidBody.velocity.y >= 0.5f ) // face up
+                    m_targetStopPos = new Vector3(0.0f, m_initialHeight + Mathf.Ceil(m_height / m_floorHeight) * m_floorHeight, 0.0f);
+                else if(m_rigidBody.velocity.y <= -0.5f)
+                    m_targetStopPos = new Vector3(0.0f, m_initialHeight + Mathf.Floor(m_height / m_floorHeight) * m_floorHeight, 0.0f);
+
+                if (Mathf.Abs(m_targetStopPos.y - transform.position.y) <= m_floorHeight * 0.4f)
+                    ChangeElevatorState(ElevateState.ES_PreStop);
+                else if(m_rigidBody.velocity.magnitude <= 2.0f)
+                    ChangeElevatorState(ElevateState.ES_Stoped);
+            }
         }
         else if (m_rigidBody.velocity.magnitude > MaxSpeed)
         {
@@ -210,8 +238,14 @@ public class ElevatorCtrl : MonoBehaviour
             case ElevateState.ES_Stopping:
                 m_rigidBody.isKinematic = false;
                 break;
+            case ElevateState.ES_PreStop:
+                m_rigidBody.isKinematic = true;
+                break;
             case ElevateState.ES_Stoped:
-                GameManager.Instance.GetEventManager().InvokeEvent(Event.EVENT_ELEVATOR_STOP, new Dictionary<string, object> { { "level", m_height / m_floorHeight } });
+                float dist = Mathf.Abs(m_initialHeight + Mathf.RoundToInt(m_height / m_floorHeight) * m_floorHeight - transform.position.y);
+                if (dist <= 1.0f)
+                    OnLevelArrived();
+                    
                 m_bFreeFalling = false;
                 m_rigidBody.isKinematic = true;
                 break;
@@ -257,6 +291,48 @@ public class ElevatorCtrl : MonoBehaviour
             m_shiftAmount--;
             if (m_shiftAmount <= 0)
                 ChangeElevatorState(ElevateState.ES_Stoped);
+        }
+    }
+
+    private void OnLevelArrived()
+    {
+        GameManager.Instance.GetEventManager().InvokeEvent(Event.EVENT_ELEVATOR_STOP, new Dictionary<string, object> { { "level", Mathf.RoundToInt(m_height / m_floorHeight) } });
+        // StartCoroutine(OpenTheDoor());
+    }
+
+    IEnumerator CloseTheDoor() // true to close
+    {
+        float elapsedTime = 0.5f;
+        Vector3 leftStart = new Vector3(0.43f, m_leftDoor.transform.position.y, m_leftDoor.transform.position.z);
+        Vector3 leftEnd = new Vector3(0.3f, leftStart.y, leftStart.z);
+
+        Vector3 rightStart = m_rightDoor.transform.position;
+        Vector3 rightEnd = new Vector3(0f, rightStart.y, rightStart.z);
+
+        while (elapsedTime >= 0.0f)
+        {
+            m_leftDoor.transform.position = Vector3.Lerp(leftStart, leftEnd, (elapsedTime / 0.5f));
+            //m_rightDoor.transform.position = Vector3.Lerp(rightStart, rightEnd, (elapsedTime / 0.5f));
+            elapsedTime -= Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+    }
+
+    IEnumerator OpenTheDoor() // true to close
+    {
+        float elapsedTime = 0.5f;
+        Vector3 leftStart = new Vector3(0.3f, m_leftDoor.transform.position.y, m_leftDoor.transform.position.z);
+        Vector3 leftEnd = new Vector3(0.44f, leftStart.y, leftStart.z);
+
+        Vector3 rightStart = m_rightDoor.transform.position;
+        Vector3 rightEnd = new Vector3(-0.22f, rightStart.y, rightStart.z);
+
+        while (elapsedTime >= 0.0f)
+        {
+            m_leftDoor.transform.position = Vector3.Lerp(leftStart, leftEnd, (elapsedTime / 0.5f));
+            m_rightDoor.transform.position = Vector3.Lerp(rightStart, rightEnd, (elapsedTime / 0.5f));
+            elapsedTime -= Time.deltaTime;
+            yield return new WaitForEndOfFrame();
         }
     }
 }

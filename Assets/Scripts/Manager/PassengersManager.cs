@@ -13,11 +13,12 @@ public class PassengersManager : MonoBehaviour
 
     private DifficultyInfo curDifficultyInfo;
 
-    //private Vector3 initialPos = new Vector3(34.1230469f, -559f, 121.300003f);
+    public GameObject m_elevator;
 
     private static int passengerId = 0;
 
     public GameObject passengerSpawnPoint;
+    Vector3 spawnPointHeight;
 
     public void OnGameStart(int difficulty)
     {
@@ -28,12 +29,15 @@ public class PassengersManager : MonoBehaviour
 
         Assert.IsNotNull(passengerPrefab);
 
+        spawnPointHeight = passengerSpawnPoint.transform.position;
+
         SpawnPassengers(0);
     }
 
     void OnPassengerDeliver(Dictionary<string, object> message)
     {
         int level = (int)message["level"];
+        Debug.Log("OnPassengerDeliver " + level);
         deliveredAmount++;
         if (deliveredAmount == 4)
             GameManager.Instance.GetEventManager().InvokeEvent(Event.EVENT_CATASTROPHE_FIRE, new Dictionary<string, object> { { "deliveredAmount", deliveredAmount }, { "duration", 3.0f } });
@@ -63,8 +67,8 @@ public class PassengersManager : MonoBehaviour
             if (poolable == null)
                 return;
 
-            Vector2 offset = Random.insideUnitCircle * 3.0f;
-            Vector3 floorPos = new Vector3(offset.x, 60.0f * spawnLevel + 1.0f, offset.y) + passengerSpawnPoint.transform.position;
+            Vector2 offset = Random.insideUnitCircle * 5.0f;
+            Vector3 floorPos = new Vector3(offset.x, 60.0f * spawnLevel + 1.0f, 0.0f) + spawnPointHeight;
             poolable.gameObject.transform.position = floorPos;
 
             PassengerCtrl passenger = poolable.gameObject.GetComponent<PassengerCtrl>();
@@ -72,6 +76,8 @@ public class PassengersManager : MonoBehaviour
             float bestDeliverTime = Random.Range(curDifficultyInfo.minDeliverTime, curDifficultyInfo.maxDeliverTime);
             int targetLevel = Random.Range(1, 10);
             passenger.Init(passengerId, bestDeliverTime, targetLevel, EmotionState.ES_HAPPY);
+
+            poolable.transform.SetParent(m_elevator.transform, true);
 
             passengerId++;
             amount++;

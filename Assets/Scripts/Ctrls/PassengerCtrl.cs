@@ -49,6 +49,8 @@ public class PassengerCtrl : MonoBehaviour
         curEmotionConfig = ConfigManager.Instance.GetEmoitionConfig(initialState);
 
         m_HUD.Init(initialState, targetLevel);
+
+        StartCoroutine(BoardElevator());
     }
 
     public void Reset()
@@ -62,7 +64,7 @@ public class PassengerCtrl : MonoBehaviour
     private void Awake()
     {
         GameManager.Instance.GetEventManager().StartListening(Event.EVENT_ELEVATOR_STOP, OnElevatorStop);
-        m_rigidbody = GetComponent<Rigidbody>();
+        //m_rigidbody = GetComponent<Rigidbody>();
     }
 
     void Update()
@@ -98,8 +100,7 @@ public class PassengerCtrl : MonoBehaviour
         if (!gameObject.activeSelf)
             return;
 
-        float data = (float)message["level"];
-        int level = (int)data;
+        int level = (int)message["level"];
 
         if(level == m_targetLevel)
         {
@@ -108,25 +109,37 @@ public class PassengerCtrl : MonoBehaviour
             float reward = GetReward();
             GameManager.Instance.GetEventManager().InvokeEvent(Event.EVENT_PASSENGER_DELVERED, new Dictionary<string, object> { { "level", level }, { "reward", reward } });
 
-            // StartCoroutine(AfterDeliver());
-            Reset();
-            var poolable = gameObject.GetComponent<Poolable>();
-            PoolManager.Instance.ReturnPoolable(poolable);
+            StartCoroutine(AfterDeliver());
         }
     }
 
     IEnumerator AfterDeliver()
     {
-        yield return new WaitForSeconds(3.0f);
+        float elapsedTime = 0.0f;
+
+        while (elapsedTime <= 0.8f)
+        {
+            elapsedTime += Time.deltaTime;
+
+            transform.position += new Vector3(0.0f, 0.0f, 0.1f);
+            yield return new WaitForEndOfFrame();
+        }
+        Reset();
         var poolable = gameObject.GetComponent<Poolable>();
         PoolManager.Instance.ReturnPoolable(poolable);
     }
 
-    private void OnTriggerEnter(Collider other)
+    IEnumerator BoardElevator()
     {
-        transform.SetParent(other.transform);
-        m_rigidbody.isKinematic = true;
+        float elapsedTime = 0.0f;
 
-        m_HUD.UpdatePos(transform.position);
+        while (elapsedTime <= 0.8f)
+        {
+            elapsedTime += Time.deltaTime;
+
+            transform.position += new Vector3(0.0f, 0.0f, -0.1f);
+            m_HUD.UpdatePos(transform.position);
+            yield return new WaitForEndOfFrame();
+        }
     }
 }
