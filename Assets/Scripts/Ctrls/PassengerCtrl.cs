@@ -64,6 +64,7 @@ public class PassengerCtrl : MonoBehaviour
     private void Awake()
     {
         GameManager.Instance.GetEventManager().StartListening(Event.EVENT_ELEVATOR_STOP, OnElevatorStop);
+        GameManager.Instance.GetEventManager().StartListening(Event.EVENT_CATASTROPHE_FIRE, OnCatastropheFire);
         //m_rigidbody = GetComponent<Rigidbody>();
     }
 
@@ -111,6 +112,11 @@ public class PassengerCtrl : MonoBehaviour
 
             StartCoroutine(AfterDeliver());
         }
+    }
+
+    void OnCatastropheFire(Dictionary<string, object> message)
+    {
+        m_emotionState = EmotionState.ES_ANGER;
     }
 
     IEnumerator AfterDeliver()

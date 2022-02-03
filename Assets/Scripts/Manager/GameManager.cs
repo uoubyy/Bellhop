@@ -38,6 +38,7 @@ public class GameManager : Singleton<GameManager>
     {
         m_gameState = GameState.GS_Idle;
         m_eventManager.StartListening(Event.EVENT_PASSENGER_DELVERED, OnPassengerDelivered);
+        m_eventManager.StartListening(Event.EVENT_CATASTROPHE_FIRE, OnCatastropheFire);
     }
 
     public void OnGameStart()
@@ -47,7 +48,7 @@ public class GameManager : Singleton<GameManager>
         m_passengersManager.OnGameStart(1);
 
         DifficultyInfo levelInfo = ConfigManager.Instance.GetDifficultyConfig(1);
-        m_timeCountDown = levelInfo.gametime;
+        m_timeCountDown = 0;// levelInfo.gametime;
 
         m_eventManager.InvokeEvent(Event.EVENT_GAME_START, new Dictionary<string, object> { { "gametime", levelInfo.gametime } });
         m_InputManager.EnableInput(true);
@@ -63,13 +64,13 @@ public class GameManager : Singleton<GameManager>
     // Update is called once per frame
     void Update()
     {
-/*        if (m_gameState == GameState.GS_Running)
+        if (m_gameState == GameState.GS_Running)
         {
-            m_timeCountDown -= Time.deltaTime;
+            m_timeCountDown += Time.deltaTime;
 
-            if (m_timeCountDown <= 0.0)
-                OnGameOver();
-        }*/
+/*            if (m_timeCountDown <= 0.0)
+                OnGameOver();*/
+        }
     }
 
     public GameState GetGameState() { return m_gameState; }
@@ -100,5 +101,10 @@ public class GameManager : Singleton<GameManager>
     {
         float reward = (float)message["reward"];
         m_timeCountDown += reward;
+    }
+
+    private void OnCatastropheFire(Dictionary<string, object> message)
+    {
+        m_InputManager.EnableInput(false);
     }
 }

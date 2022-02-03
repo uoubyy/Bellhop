@@ -55,6 +55,13 @@ public class ElevatorCtrl : MonoBehaviour
     public GameObject m_rightDoor;
     private Vector3 m_targetStopPos;
 
+    public AudioClip m_levelArrivedClip;
+    public AudioClip m_elevatorRunningClip;
+    public AudioSource m_musicPlayer;
+
+    public ParticleSystem m_fileEffect;
+    public ParticleSystem m_waterEffect;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -107,7 +114,10 @@ public class ElevatorCtrl : MonoBehaviour
 
         m_timeIndictor.text = string.Format("Time {0,7:f3}", m_runningTime);
 
-        if(m_elevatorState == ElevateState.ES_PreStop)
+        if (m_elevatorState == ElevateState.ES_Catastrophe)
+            return;
+
+        if (m_elevatorState == ElevateState.ES_PreStop)
         {
             float dist = Mathf.Abs(transform.position.y - m_targetStopPos.y);
             if (Mathf.Abs(transform.position.y - m_targetStopPos.y) >= 0.005f)
@@ -115,12 +125,17 @@ public class ElevatorCtrl : MonoBehaviour
                 transform.position = Vector3.MoveTowards(transform.position, m_targetStopPos, 10.0f * Time.deltaTime);
             }
             else
+            {
                 ChangeElevatorState(ElevateState.ES_Stoped);
+            }
         }
     }
 
     void FixedUpdate()
     {
+        if (m_elevatorState == ElevateState.ES_Catastrophe)
+            return;
+
 #if UNITY_EDITOR || DEBUG
         if (Input.GetJoystickNames().Length > 0)
 #endif
@@ -194,6 +209,9 @@ public class ElevatorCtrl : MonoBehaviour
 
     private void OnUpBtnStateChange(Dictionary<string, object> message)
     {
+        if (m_elevatorState == ElevateState.ES_Catastrophe)
+            return;
+
         if ((bool)message["pressed"])
         {
             m_pullingForce = MaxForce;
@@ -208,6 +226,9 @@ public class ElevatorCtrl : MonoBehaviour
 
     private void OnDownBtnStateChange(Dictionary<string, object> message)
     {
+        if (m_elevatorState == ElevateState.ES_Catastrophe)
+            return;
+
         if ((bool)message["pressed"])
         {
             m_pullingForce = -MaxForce;
@@ -222,6 +243,8 @@ public class ElevatorCtrl : MonoBehaviour
 
     private void ChangeElevatorState(ElevateState newState)
     {
+        Debug.Log(string.Format("Change state from {0} to {1}", m_elevatorState.ToString(), newState.ToString()));
+
         if (newState == m_elevatorState)
             return;
 
@@ -231,13 +254,7 @@ public class ElevatorCtrl : MonoBehaviour
                 m_rigidBody.isKinematic = true;
                 break;
             case ElevateState.ES_Up:
-                if (transform.position.y - m_initialHeight >= m_maxHeight - 1.0f)
-                    return;
-                m_rigidBody.isKinematic = false;
-                break;
             case ElevateState.ES_Down:
-                m_rigidBody.isKinematic = false;
-                break;
             case ElevateState.ES_Stopping:
                 m_rigidBody.isKinematic = false;
                 break;
@@ -254,6 +271,7 @@ public class ElevatorCtrl : MonoBehaviour
                 break;
             case ElevateState.ES_Catastrophe:
                 m_rigidBody.isKinematic = true;
+                m_fileEffect.Play();
                 break;
             case ElevateState.ES_FreeFall:
                 m_rigidBody.isKinematic = false;
@@ -289,16 +307,30 @@ public class ElevatorCtrl : MonoBehaviour
 
     private void OnPressShift(Dictionary<string, object> message)
     {
-        if (m_elevatorState == ElevateState.ES_Catastrophe)
+        //if (m_elevatorState == ElevateState.ES_Catastrophe)
         {
             m_shiftAmount--;
             if (m_shiftAmount <= 0)
+            {
+                m_fileEffect.Stop();
+                m_waterEffect.Play();
+                GameManager.Instance.GetInputManager().EnableInput(true);
                 ChangeElevatorState(ElevateState.ES_Stoped);
+
+                StartCoroutine(StopWater());
+            }
         }
+    }
+
+    IEnumerator StopWater()
+    {
+        yield return new WaitForSeconds(0.5f);
+        m_waterEffect.Stop();
     }
 
     private void OnLevelArrived()
     {
+        m_musicPlayer.PlayOneShot(m_levelArrivedClip);
         GameManager.Instance.GetEventManager().InvokeEvent(Event.EVENT_ELEVATOR_STOP, new Dictionary<string, object> { { "level", Mathf.RoundToInt(m_height / m_floorHeight) } });
         // StartCoroutine(OpenTheDoor());
     }

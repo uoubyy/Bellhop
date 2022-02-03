@@ -3,84 +3,98 @@
         "ID": 0,
         "name": "Level0",
         "key1": "a",
-        "key2": ""
+        "key2": "",
+        "canDisable": true
     },
     {
         "ID": 1,
         "name": "Level1",
         "key1": "s",
-        "key2": ""
+        "key2": "",
+        "canDisable": true
     },
     {
         "ID": 2,
         "name": "Level2",
         "key1": "d",
-        "key2": ""
+        "key2": "",
+        "canDisable": true
     },
     {
         "ID": 3,
         "name": "Level3",
         "key1": "f",
-        "key2": ""
+        "key2": "",
+        "canDisable": true
     },
     {
         "ID": 4,
         "name": "Level4",
         "key1": "g",
-        "key2": ""
+        "key2": "",
+        "canDisable": true
     },
     {
         "ID": 5,
         "name": "Level5",
         "key1": "h",
-        "key2": ""
+        "key2": "",
+        "canDisable": true
     },
     {
         "ID": 6,
         "name": "Level6",
         "key1": "j",
-        "key2": ""
+        "key2": "",
+        "canDisable": true
     },
     {
         "ID": 7,
         "name": "Level7",
         "key1": "k",
-        "key2": ""
+        "key2": "",
+        "canDisable": true
     },
     {
         "ID": 8,
         "name": "Level8",
         "key1": "l",
-        "key2": ""
+        "key2": "",
+        "canDisable": true
     },
     {
         "ID": 9,
         "name": "Level9",
         "key1": "m",
-        "key2": ""
+        "key2": "",
+        "canDisable": true
     },
     {
         "ID": 99,
         "name": "event_elevator_up",
         "key1": "left",
-        "key2": ""
+        "key2": "",
+        "canDisable": true
     },
     {
         "ID": 99,
         "name": "event_elevator_down",
         "key1": "right",
-        "key2": ""
+        "key2": "",
+        "canDisable": true
     },
     {
         "ID": 99,
         "name": "event_elevator_free_fall",
         "key1": "space",
-        "key2": ""
+        "key2": "",
+        "canDisable": true
     },
     {
         "ID": 99,
         "name": "event_press_shift",
         "key1": "right shift",
-        "key2": ""
+        "key2": "",
+        "canDisable": false
     }
 ]

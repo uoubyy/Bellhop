@@ -63,6 +63,5 @@ public class PassengerInfo : MonoBehaviour
     public void UpdateEmotion(EmotionState emotion)
     {
         m_emotionIcon.sprite = emotionSprite[(int)emotion];
-
     }
 }

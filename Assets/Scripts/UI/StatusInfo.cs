@@ -28,14 +28,14 @@ public class StatusInfo : MonoBehaviour
 
             countDownTime.text = string.Format("{0:D2}:{1:D2}", minutes, seconds);
 
-            gametime -= Time.deltaTime;
+            gametime += Time.deltaTime;
             gametime = gametime < 0 ? 0 : gametime;
         }
     }
 
     private void OnGameStart(Dictionary<string, object> message)
     {
-        gametime = (float)message["gametime"];
+        gametime = 0;// (float)message["gametime"];
     }
 
     private void OnGameOver(Dictionary<string, object> message)

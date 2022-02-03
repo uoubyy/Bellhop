@@ -10,6 +10,7 @@ public class KeyBinding
     public string name;
     public string key1;
     public string key2;
+    public bool canDisable;
 }
 
 [System.Serializable]
@@ -60,14 +61,7 @@ public class InputManager : MonoBehaviour
     {
         m_inputs.Clear();
 
-        if (!m_enableInput) return;
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-
-        }
-
-
-            foreach (KeyBinding keyBinding in m_keyBinding.KeyBindingsList)
+        foreach (KeyBinding keyBinding in m_keyBinding.KeyBindingsList)
         {
             bool keyUp = false, keyDown = false;
 #if UNITY_EDITOR || DEBUG
@@ -77,6 +71,9 @@ public class InputManager : MonoBehaviour
             keyDown = Input.GetKeyDown(keyBinding.key2);
             keyUp = Input.GetKeyUp(keyBinding.key2);
 #endif
+
+            if (!m_enableInput && keyBinding.canDisable)
+                continue;
 
             if(keyDown)
             {
