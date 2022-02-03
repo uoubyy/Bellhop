@@ -106,7 +106,7 @@ public class ElevatorCtrl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        m_speedIndictor.text = string.Format("Speed {0,7:f3}", m_speed);
+        m_speedIndictor.text = string.Format("Speed {0,7:f3} {1}", m_speed, m_elevatorState.ToString());
         m_heightIndictor.text = string.Format("Height {0,7:f3}", m_height);
 
         if (m_elevatorState != ElevateState.ES_Idle && m_elevatorState != ElevateState.ES_Stoped)
@@ -150,12 +150,12 @@ public class ElevatorCtrl : MonoBehaviour
                 m_pullingForce = Input.GetAxis("Vertical") * MaxForce;
                 if (!IsRunning())
                 {
-                    if (m_pullingForce <= -0.5f)
+                    if (m_pullingForce <= -10f)
                         ChangeElevatorState(ElevateState.ES_Down);
-                    else if (m_pullingForce >= 0.5f)
+                    else if (m_pullingForce >= 10f)
                         ChangeElevatorState(ElevateState.ES_Up);
                 }
-                else if (m_pullingForce >= -0.5f && m_pullingForce <= 0.5f)
+                else if (m_pullingForce >= -10f && m_pullingForce <= 10f)
                 {
                     ChangeElevatorState(ElevateState.ES_Stopping);
                 }
@@ -172,12 +172,12 @@ public class ElevatorCtrl : MonoBehaviour
          Vector3 moveForce = new Vector3(0, m_pullingForce, 0) - m_firctionFactor * m_rigidBody.mass * m_gravity * m_rigidBody.velocity.normalized;
          m_rigidBody.AddForce(moveForce, ForceMode.Impulse);
 
-        if (m_rigidBody.velocity.y >= 0.5f && transform.position.y - m_initialHeight >= m_maxHeight - 1.0f) // facing up
+        if (m_rigidBody.velocity.y >= 0.5f && transform.position.y - m_initialHeight >= m_maxHeight - 0.8f) // facing up
         {
             ChangeElevatorState(ElevateState.ES_Stoped);
             transform.position = new Vector3(transform.position.x, m_initialHeight + m_maxHeight, transform.position.z);
         }
-        else if (m_rigidBody.velocity.y <= -0.5f && transform.position.y - m_initialHeight <= 1.0f) // facing down
+        else if (m_rigidBody.velocity.y <= -0.5f && transform.position.y - m_initialHeight <= 0.8f) // facing down
         {
             ChangeElevatorState(ElevateState.ES_Stoped);
             transform.position = new Vector3(transform.position.x, m_initialHeight, transform.position.z);
@@ -185,16 +185,16 @@ public class ElevatorCtrl : MonoBehaviour
 
         if (m_elevatorState == ElevateState.ES_Stopping)
         {
-            if(m_rigidBody.velocity.magnitude <= 5.0f)
+            if(m_rigidBody.velocity.magnitude <= 10.0f)
             {
                 if (m_rigidBody.velocity.y >= 0.5f ) // face up
                     m_targetStopPos = new Vector3(0.0f, m_initialHeight + Mathf.Ceil(m_height / m_floorHeight) * m_floorHeight, 0.0f);
                 else if(m_rigidBody.velocity.y <= -0.5f)
                     m_targetStopPos = new Vector3(0.0f, m_initialHeight + Mathf.Floor(m_height / m_floorHeight) * m_floorHeight, 0.0f);
 
-                if (Mathf.Abs(m_targetStopPos.y - transform.position.y) <= m_floorHeight * 0.3f)
+                if (Mathf.Abs(m_targetStopPos.y - transform.position.y) <= m_floorHeight * 0.2f)
                     ChangeElevatorState(ElevateState.ES_PreStop);
-                else if(m_rigidBody.velocity.magnitude <= 2.0f)
+                else if(m_rigidBody.velocity.magnitude <= 5.0f)
                     ChangeElevatorState(ElevateState.ES_Stoped);
             }
         }
@@ -206,7 +206,7 @@ public class ElevatorCtrl : MonoBehaviour
 
     public bool IsRunning()
     {
-        return m_elevatorState != ElevateState.ES_Idle && m_elevatorState != ElevateState.ES_Stoped;
+        return m_elevatorState == ElevateState.ES_Up || m_elevatorState == ElevateState.ES_Down;
     }
 
     private void OnUpBtnStateChange(Dictionary<string, object> message)
@@ -249,6 +249,7 @@ public class ElevatorCtrl : MonoBehaviour
 
         if (newState == m_elevatorState)
             return;
+        m_elevatorState = newState;
 
         switch (newState)
         {
@@ -256,7 +257,13 @@ public class ElevatorCtrl : MonoBehaviour
                 m_rigidBody.isKinematic = true;
                 break;
             case ElevateState.ES_Up:
+                m_rigidBody.isKinematic = false;
+                m_rigidBody.velocity = new Vector3(0.0f, 10.0f, 0.0f);
+                break;
             case ElevateState.ES_Down:
+                m_rigidBody.isKinematic = false;
+                m_rigidBody.velocity = new Vector3(0.0f, -10.0f, 0.0f);
+                break;
             case ElevateState.ES_Stopping:
                 m_rigidBody.isKinematic = false;
                 break;
@@ -279,8 +286,6 @@ public class ElevatorCtrl : MonoBehaviour
                 m_rigidBody.isKinematic = false;
                 break;
         }
-
-        m_elevatorState = newState;
     }
 
     private void OnCatastropheFire(Dictionary<string, object> message)

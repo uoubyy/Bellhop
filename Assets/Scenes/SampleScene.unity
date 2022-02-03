@@ -5280,7 +5280,7 @@ MonoBehaviour:
   m_levelIndictor: {fileID: 1502657431}
   m_timeIndictor: {fileID: 1728818827}
   MaxSpeed: 200
-  MaxForce: 100
+  MaxForce: 120
   m_gravityScale: 10
   m_firctionFactor: 0.1
   m_elevatorState: 0
@@ -6717,7 +6717,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 300, y: -81}
+  m_AnchoredPosition: {x: 300, y: -279}
   m_SizeDelta: {x: 500, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2058375647
