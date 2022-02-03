@@ -140,7 +140,10 @@ public class ElevatorCtrl : MonoBehaviour
         }
 
         if (m_elevatorState == ElevateState.ES_FreeFall) // TODO SPECIAL EVENT 
+        {
             m_pullingForce = -m_gravity * m_gravityScale * m_rigidBody.mass;
+            Debug.Log(string.Format("Free fall force: {0}", m_pullingForce));
+        }
 
         if (m_elevatorState == ElevateState.ES_Idle || m_elevatorState == ElevateState.ES_Stoped)
             return;
