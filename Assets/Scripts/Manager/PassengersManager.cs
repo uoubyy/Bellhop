@@ -67,14 +67,17 @@ public class PassengersManager : MonoBehaviour
             if (poolable == null)
                 return;
 
-            Vector2 offset = Random.insideUnitCircle * 5.0f;
-            Vector3 floorPos = new Vector3(offset.x, 60.0f * spawnLevel + 1.0f, 0.0f) + spawnPointHeight;
+            float offset = Random.Range(-5.0f, 5.0f);
+            Vector3 floorPos = new Vector3(offset, 60.0f * spawnLevel + 1.0f, 0.0f) + spawnPointHeight;
             poolable.gameObject.transform.position = floorPos;
 
             PassengerCtrl passenger = poolable.gameObject.GetComponent<PassengerCtrl>();
 
             float bestDeliverTime = Random.Range(curDifficultyInfo.minDeliverTime, curDifficultyInfo.maxDeliverTime);
             int targetLevel = Random.Range(1, 10);
+            while(targetLevel == spawnLevel)
+                targetLevel = Random.Range(1, 10);
+
             passenger.Init(passengerId, bestDeliverTime, targetLevel, EmotionState.ES_HAPPY);
 
             poolable.transform.SetParent(m_elevator.transform, true);

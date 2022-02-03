@@ -55,7 +55,7 @@ public class PassengerInfo : MonoBehaviour
 
     public void UpdatePos(Vector3 targetPosition)
     {
-        transform.position = Camera.main.WorldToScreenPoint(targetPosition) + new Vector3(0.0f, 200.0f, 0.0f);
+        transform.position = Camera.main.WorldToScreenPoint(targetPosition) + new Vector3(0.0f, 100.0f, 0.0f);
         initialY = transform.position.y;
         gameObject.SetActive(true);
     }

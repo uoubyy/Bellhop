@@ -52,7 +52,7 @@ public class LevelBtnCtrl : MonoBehaviour
     {
         float elevatorLevel = (int)message["level"];
 
-        Debug.Log(string.Format("{0} => {1}", m_minHeight, m_maxHeight));
+        // Debug.Log(string.Format("{0} => {1}", m_minHeight, m_maxHeight));
         if(elevatorLevel == m_levelID /*&& m_levelPressed*/)
         {
             m_levelPressed = false;
